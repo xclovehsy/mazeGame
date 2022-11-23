@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:id="$+id:game_layout"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:alignment="horizontal_center"
+    ohos:orientation="vertical">
+
+
+    <TableLayout
+        ohos:id="$+id:map_layout"
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:layout_alignment="center"
+        ohos:orientation="vertical"
+        ohos:top_margin="20fp">
+
+    </TableLayout>
+
+    <Image
+        ohos:id="$+id:player"
+        ohos:height="100"
+        ohos:width="100"
+        ohos:image_src="$media:player1"
+        ohos:scale_mode="stretch"
+     
+        >
+    </Image>
+
+
+    <DirectionalLayout
+        ohos:height="match_content"
+        ohos:orientation="horizontal"
+        ohos:alignment="center"
+        ohos:width="match_parent">
+
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:orientation="vertical"
+            ohos:width="match_content">
+            <DirectionalLayout
+                ohos:height="match_content"
+                ohos:orientation="horizontal"
+                ohos:alignment="center"
+                ohos:width="match_content">
+                <Image
+                    ohos:height="40fp"
+                    ohos:width="40fp"
+                    ohos:scale_mode="stretch"
+                    ohos:image_src="$media:dengji">
+
+                </Image>
+                <Text
+                    ohos:height="match_content"
+                    ohos:left_margin="10fp"
+                    ohos:width="match_content"
+                    ohos:text_size="20fp"
+                    ohos:id="$+id:level_text"
+                    ohos:text="level.1">
+                </Text>
+
+            </DirectionalLayout>
+
+            <DirectionalLayout
+                ohos:height="match_content"
+                ohos:orientation="horizontal"
+                ohos:alignment="center"
+                ohos:width="match_content">
+                <Image
+                    ohos:height="40fp"
+                    ohos:width="40fp"
+                    ohos:scale_mode="stretch"
+                    ohos:image_src="$media:xue">
+
+                </Image>
+                <Text
+                    ohos:height="match_content"
+                    ohos:left_margin="10fp"
+                    ohos:width="match_content"
+                    ohos:text_size="20fp"
+                    ohos:id="$+id:xue_text"
+                    ohos:text="100">
+                </Text>
+
+            </DirectionalLayout>
+
+            <DirectionalLayout
+                ohos:height="match_content"
+                ohos:orientation="horizontal"
+                ohos:alignment="center"
+                ohos:width="match_content">
+                <Image
+                    ohos:height="40fp"
+                    ohos:width="40fp"
+                    ohos:scale_mode="stretch"
+                    ohos:image_src="$media:dao">
+
+                </Image>
+                <Text
+                    ohos:height="match_content"
+                    ohos:left_margin="10fp"
+                    ohos:width="match_content"
+                    ohos:text_size="20fp"
+                    ohos:id="$+id:gongji_text"
+                    ohos:text="10">
+                </Text>
+
+            </DirectionalLayout>
+
+            <DirectionalLayout
+                ohos:height="match_content"
+                ohos:orientation="horizontal"
+                ohos:alignment="center"
+                ohos:width="match_content">
+                <Image
+                    ohos:height="40fp"
+                    ohos:width="40fp"
+                    ohos:scale_mode="stretch"
+                    ohos:image_src="$media:dunpai">
+
+                </Image>
+
+                <Text
+                    ohos:height="match_content"
+                    ohos:left_margin="10fp"
+                    ohos:width="match_content"
+                    ohos:text_size="20fp"
+                    ohos:id="$+id:fangyu_text"
+                    ohos:text="10">
+                </Text>
+
+            </DirectionalLayout>
+
+            <DirectionalLayout
+                ohos:height="match_content"
+                ohos:orientation="horizontal"
+                ohos:alignment="center"
+                ohos:width="match_content">
+                <Image
+                    ohos:height="40fp"
+                    ohos:width="40fp"
+                    ohos:scale_mode="stretch"
+                    ohos:image_src="$media:money">
+
+                </Image>
+                <Text
+                    ohos:height="match_content"
+                    ohos:left_margin="10fp"
+                    ohos:width="match_content"
+                    ohos:text_size="20fp"
+                    ohos:id="$+id:money_text"
+                    ohos:text="10">
+                </Text>
+
+            </DirectionalLayout>
+
+        </DirectionalLayout>
+
+        <TableLayout
+            ohos:height="match_content"
+            ohos:left_margin="10fp"
+            ohos:width="match_content"
+            ohos:row_count="3"
+            ohos:column_count="3">
+            <Image
+                ohos:height="60fp"
+                ohos:width="60fp"
+                ohos:scale_mode="stretch"
+                ohos:id="$+id:left_up"
+                ohos:visibility="invisible"
+                ohos:image_src="$media:left_up">
+            </Image>
+
+            <Image
+                ohos:height="60fp"
+                ohos:width="60fp"
+                ohos:scale_mode="stretch"
+                ohos:id="$+id:up"
+                ohos:image_src="$media:up">
+            </Image>
+
+            <Image
+                ohos:height="60fp"
+                ohos:width="60fp"
+                ohos:scale_mode="stretch"
+                ohos:id="$+id:right_up"
+                ohos:visibility="invisible"
+                ohos:image_src="$media:right_up">
+            </Image>
+
+            <Image
+                ohos:height="60fp"
+                ohos:width="60fp"
+                ohos:scale_mode="stretch"
+                ohos:id="$+id:left"
+                ohos:image_src="$media:left">
+            </Image>
+
+            <Image
+                ohos:height="60fp"
+                ohos:width="60fp"
+                ohos:scale_mode="stretch"
+                ohos:id="$+id:center"
+                ohos:visibility="invisible"
+                ohos:image_src="$media:left">
+            </Image>
+
+            <Image
+                ohos:height="60fp"
+                ohos:width="60fp"
+                ohos:scale_mode="stretch"
+                ohos:id="$+id:right"
+                ohos:image_src="$media:right">
+            </Image>
+
+            <Image
+                ohos:height="60fp"
+                ohos:width="60fp"
+                ohos:scale_mode="stretch"
+                ohos:id="$+id:left_down"
+                ohos:visibility="invisible"
+                ohos:image_src="$media:left_down">
+            </Image>
+
+            <Image
+                ohos:height="60fp"
+                ohos:width="60fp"
+                ohos:scale_mode="stretch"
+                ohos:id="$+id:down"
+                ohos:image_src="$media:down">
+            </Image>
+
+            <Image
+                ohos:height="60fp"
+                ohos:width="60fp"
+                ohos:scale_mode="stretch"
+                ohos:id="$+id:right_down"
+                ohos:visibility="invisible"
+                ohos:image_src="$media:right_down">
+            </Image>
+
+
+
+
+
+        </TableLayout>
+
+
+    </DirectionalLayout>
+    <Button
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:text="play"
+        ohos:text_size="20fp"
+        ohos:id="$+id:play_btn"
+        >
+    </Button>
+
+
+
+
+
+
+
+
+</DirectionalLayout>
