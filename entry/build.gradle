@@ -14,12 +14,22 @@ ohos {
             }
         }
     }
+
+    compileOptions{
+        annotationEnabled true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
     testImplementation 'junit:junit:4.13.1'
     ohosTestImplementation 'com.huawei.ohos.testkit:runner:2.0.0.400'
+
+    compile files("C:\\Users\\xc\\AppData\\Local\\HarmonyOS\\Sdk\\java\\2.2.0.3\\api\\ohos.jar","C:\\Users\\xc\\AppData\\Local\\HarmonyOS\\Sdk\\java\\2.2.0.3\\build-tools\\lib\\orm_annotations_java.jar",
+            "C:\\Users\\xc\\AppData\\Local\\HarmonyOS\\Sdk\\java\\2.2.0.3\\build-tools\\lib\\orm_annotations_processor_java.jar","C:\\Users\\xc\\AppData\\Local\\HarmonyOS\\Sdk\\java\\2.2.0.3\\build-tools\\lib\\javapoet_java.jar")
+    annotationProcessor files("C:\\Users\\xc\\AppData\\Local\\HarmonyOS\\Sdk\\java\\2.2.0.3\\build-tools\\lib\\orm_annotations_java.jar",
+            "C:\\Users\\xc\\AppData\\Local\\HarmonyOS\\Sdk\\java\\2.2.0.3\\build-tools\\lib\\orm_annotations_processor_java.jar","C:\\Users\\xc\\AppData\\Local\\HarmonyOS\\Sdk\\java\\2.2.0.3\\build-tools\\lib\\javapoet_java.jar")
+
 }
 decc {
     supportType = ['html', 'xml']

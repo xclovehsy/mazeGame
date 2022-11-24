@@ -1,15 +1,21 @@
 package com.example.mazegame.slice;
 
+import com.example.mazegame.MainAbility;
 import com.example.mazegame.ResourceTable;
 import com.example.mazegame.model.Character;
+import com.example.mazegame.model.CharacterDbStore;
 import com.example.mazegame.model.Element;
 import com.example.mazegame.model.MapChip;
+import com.example.mazegame.source.Const;
 import com.example.mazegame.source.MapData;
 import com.example.mazegame.source.MonsterData;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.*;
 import ohos.agp.window.dialog.CommonDialog;
+import ohos.data.DatabaseHelper;
+import ohos.data.orm.OrmContext;
+import ohos.data.orm.OrmPredicates;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 import ohos.multimodalinput.event.TouchEvent;
@@ -43,6 +49,9 @@ public class MainAbilitySlice extends AbilitySlice {
     private Character character;
     private Text level_text, blood_text, aggre_text, defense_text, money_text;
     private int keycnt = 0;
+    private int gameLevel = 0;
+    private Button back_btn;
+    private Button store_btn;
 
 
     @Override
@@ -54,15 +63,14 @@ public class MainAbilitySlice extends AbilitySlice {
         pg_px = AttrHelper.vp2px(getContext().getResourceManager().getDeviceCapability().height, this);
 
         // 需要传的参数
-        character = new Character();
+        character = getCharaterData();  // 从数据库中获取数据
+        gameLevel = intent.getIntParam("gameLevel", 1);
         mapsize = 10;
-
 
         mapImage = new Image[mapsize][mapsize];
         mapElements = new Element[mapsize][mapsize];
 
-
-        MapData.Map mapData = new MapData().getMap(10, 3);
+        MapData.Map mapData = new MapData().getMap(mapsize, gameLevel - 1);
         beginx = mapData.beginX;
         beginy = mapData.beginY;
         map = mapData.map;
@@ -75,6 +83,36 @@ public class MainAbilitySlice extends AbilitySlice {
     }
 
     /**
+     * 从数据库中获取数据
+     *
+     * @return
+     */
+    private Character getCharaterData() {
+        Character temp = null;
+        //         ormContext为对象数据库的操作接口，之后的增删等操作都是通过该对象进行操作
+        DatabaseHelper helper = new DatabaseHelper(this);
+        OrmContext ormContext = helper.getOrmContext(Const.DB_ALIAS, Const.DB_NAME, CharacterDbStore.class);
+
+        OrmPredicates ormPredicates = ormContext.where(Character.class).equalTo("id", Const.playerId);
+
+        List<Character> recordList = ormContext.query(ormPredicates);
+
+        if (recordList.isEmpty()) {
+            temp = new Character(5201314, "player", "又是美好的一天", false, ResourceTable.Media_girl1,
+                    ResourceTable.Media_player1, 99, 50, 50, 1, 520);
+            ormContext.insert(temp);   //插入内存
+            HiLog.info(label, "insertCharacter:" + temp.toString());
+
+        } else {
+            temp = recordList.get(0);
+
+        }
+        ormContext.flush();
+        ormContext.close();
+        return temp;
+    }
+
+    /**
      * 设置玩家信息
      */
     private void setPlayerInfo() {
@@ -83,6 +121,7 @@ public class MainAbilitySlice extends AbilitySlice {
         aggre_text.setText(character.getAggressivity() + "");
         defense_text.setText(character.getDefense() + "");
         money_text.setText(character.getMoney() + "");
+        player.setPixelMap(character.getPicId());
     }
 
     /**
@@ -95,7 +134,47 @@ public class MainAbilitySlice extends AbilitySlice {
         int x = curX + moveX, y = curY + moveY;
 //        HiLog.info(label, "curX="+curX + ", curY="+curY + ", moveX="+x + ", moveY="+y +", map="+map[x][y]);
         if (x >= 0 && x < this.mapsize && y >= 0 && y < this.mapsize && map[x][y] != 1) {
-            if (map[x][y] == 3) {//men
+            if (map[x][y] == MapData.finish) {
+                clearElements();
+                int newLevel = Math.max(character.getLevel(), gameLevel+1);
+                character.setLevel(newLevel);
+                // 保存用户数据
+                saveCharacterData();
+
+                MainAbilitySlice slice = new MainAbilitySlice();
+                Intent intent = new Intent();
+                intent.setParam("gameLevel", newLevel);
+                present(slice, intent);
+
+//                CommonDialog cd = new CommonDialog(getContext());
+//                cd.setCornerRadius(50);
+//                DirectionalLayout dl = (DirectionalLayout) LayoutScatter.getInstance(getContext()).parse(ResourceTable.Layout_gameover_dialog, null, false);
+//
+//                Button nextGame_btn = (Button) dl.findComponentById(ResourceTable.Id_new_game_btn);
+//                Button replay_btn = (Button) dl.findComponentById(ResourceTable.Id_replay_btn);
+//
+//                nextGame_btn.setClickedListener(new Component.ClickedListener() {
+//                    @Override
+//                    public void onClick(Component component) {
+//                        cd.destroy();
+//                    }
+//                });
+//
+//                replay_btn.setClickedListener(new Component.ClickedListener() {
+//                    @Override
+//                    public void onClick(Component component) {
+//                        cd.destroy();
+//                    }
+//                });
+//
+//                cd.setSize(1000, 1000);
+//                cd.setContentCustomComponent(dl);
+//                cd.show();
+
+                return;
+
+
+            } else if (map[x][y] == 3) {//men
                 if (keycnt > 0) {
                     keycnt -= 1;
                     mapImage[x][y].setPixelMap(ResourceTable.Media_floor);
@@ -105,7 +184,7 @@ public class MainAbilitySlice extends AbilitySlice {
                     return;
                 }
 
-            } else if (mapElements[x][y] != null) {
+            } else if (mapElements[x][y] != null && !mapElements[x][y].isUsed()) {
                 if (!interactWithElement(x, y)) {
                     return;
                 }
@@ -127,41 +206,16 @@ public class MainAbilitySlice extends AbilitySlice {
      */
     private boolean interactWithElement(int x, int y) {
         int type = mapElements[x][y].getType();
-        if (type == MapData.finish) {
-            CommonDialog cd = new CommonDialog(getContext());
-            cd.setCornerRadius(50);
-            DirectionalLayout dl = (DirectionalLayout) LayoutScatter.getInstance(getContext()).parse(ResourceTable.Layout_gameover_dialog, null, false);
 
-            Button nextGame_btn = (Button) dl.findComponentById(ResourceTable.Id_new_game_btn);
-            Button replay_btn = (Button) dl.findComponentById(ResourceTable.Id_replay_btn);
-
-            nextGame_btn.setClickedListener(new Component.ClickedListener() {
-                @Override
-                public void onClick(Component component) {
-                    cd.destroy();
-                }
-            });
-
-            replay_btn.setClickedListener(new Component.ClickedListener() {
-                @Override
-                public void onClick(Component component) {
-                    cd.destroy();
-                }
-            });
-
-            cd.setSize(1000, 1000);
-            cd.setContentCustomComponent(dl);
-            cd.show();
-            return true;
-
-        } else if (type == MapData.money) {  // 金币
+        if (type == MapData.money) {  // 金币
             Random random = new Random();
             character.setMoney(character.getMoney() + random.nextInt(40) + 10);
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
             map[x][y] = 0;
-            mapElements[x][y] = null;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
             return true;
 
         } else if (type == MapData.small_monster) {
@@ -179,7 +233,8 @@ public class MainAbilitySlice extends AbilitySlice {
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
             map[x][y] = 0;
-            mapElements[x][y] = null;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
             return true;
 
         } else if (type == MapData.sword) {
@@ -191,7 +246,8 @@ public class MainAbilitySlice extends AbilitySlice {
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
             map[x][y] = 0;
-            mapElements[x][y] = null;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
             return true;
 
         } else if (type == MapData.aid) {
@@ -203,14 +259,16 @@ public class MainAbilitySlice extends AbilitySlice {
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
             map[x][y] = 0;
-            mapElements[x][y] = null;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
             return true;
 
         } else if (type == MapData.key) {
             keycnt += 1;
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
             map[x][y] = 0;
-            mapElements[x][y] = null;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
             return true;
         }
 
@@ -248,10 +306,11 @@ public class MainAbilitySlice extends AbilitySlice {
         give_up.setClickedListener(new Component.ClickedListener() {
             @Override
             public void onClick(Component component) {
-                if(element.getBlood()<=0){
+                if (element.getBlood() <= 0) {
                     element.getImage().setVisibility(Image.INVISIBLE);
                     map[x][y] = 0;
-                    mapElements[x][y] = null;
+//                    mapElements[x][y] = null;
+                    mapElements[x][y].setUsed(true);
                 }
 
                 cd.destroy();
@@ -264,21 +323,21 @@ public class MainAbilitySlice extends AbilitySlice {
                 Random random = new Random();
                 int sub_blood_mon = Math.max(character.getAggressivity() - element.getDefense(), 0);
                 int sub_blood_play = Math.max(0, element.getAggre() - element.getDefense());
-                int play_blood_ = character.getBlood()-sub_blood_play;
-                int mon_blood_ = element.getBlood()-sub_blood_mon;
+                int play_blood_ = character.getBlood() - sub_blood_play;
+                int mon_blood_ = element.getBlood() - sub_blood_mon;
 
-                int play_defense_ = (int)(character.getDefense()*(float) (random.nextInt(20)+80)/100);
-                int mon_defense_ = (int)(element.getDefense()*(float) (random.nextInt(20)+80)/100);
-                int play_attack_ = (int)(character.getAggressivity()*(float) (random.nextInt(20)+80)/100);
-                int mon_attack_ = (int)(element.getAggre()*(float) (random.nextInt(20)+80)/100);
+                int play_defense_ = (int) (character.getDefense() * (float) (random.nextInt(20) + 80) / 100);
+                int mon_defense_ = (int) (element.getDefense() * (float) (random.nextInt(20) + 80) / 100);
+                int play_attack_ = (int) (character.getAggressivity() * (float) (random.nextInt(20) + 80) / 100);
+                int mon_attack_ = (int) (element.getAggre() * (float) (random.nextInt(20) + 80) / 100);
 
-                play_blood.setText(play_blood_+"");
-                mon_blood.setText(mon_blood_+"");
+                play_blood.setText(play_blood_ + "");
+                mon_blood.setText(mon_blood_ + "");
 
-                play_aggre.setText(play_attack_+"");
-                play_defense.setText(play_defense_+"");
-                mon_aggre.setText(mon_attack_+"");
-                mon_defense.setText(mon_defense_+"");
+                play_aggre.setText(play_attack_ + "");
+                play_defense.setText(play_defense_ + "");
+                mon_aggre.setText(mon_attack_ + "");
+                mon_defense.setText(mon_defense_ + "");
 
                 character.setBlood(play_blood_);
                 character.setDefense(play_defense_);
@@ -311,7 +370,64 @@ public class MainAbilitySlice extends AbilitySlice {
         return false;
     }
 
+    /**
+     * 将玩家数据保存到数据库中
+     */
+    private void saveCharacterData() {
+        DatabaseHelper helper = new DatabaseHelper(this);
+        OrmContext ormContext = helper.getOrmContext(Const.DB_ALIAS, Const.DB_NAME, CharacterDbStore.class);
+
+        if (ormContext.update(character)) {
+            HiLog.info(label, "updataCharacter success " + character.toString());
+        } else {
+            HiLog.info(label, "updataCharacter fail " + character.toString());
+        }
+        ormContext.flush();
+        ormContext.close();
+    }
+
+    private void clearElements(){
+        for(int i = 0; i<mapsize; i++){
+            for(int j = 0; j<mapsize;j++){
+                if(mapElements[i][j]!=null){
+                    mainLayout.removeComponent(mapElements[i][j].getImage());
+                }
+            }
+        }
+
+    }
+
     private void addClickListener() {
+        store_btn.setClickedListener(new Component.ClickedListener() {
+            @Override
+            public void onClick(Component component) {
+
+                clearElements();
+
+                // 保存数据
+                saveCharacterData();
+
+                StoreSlice slice = new StoreSlice();
+                Intent intent = new Intent();
+                intent.setParam("gameLevel", gameLevel);
+                present(slice, intent);
+            }
+        });
+
+        back_btn.setClickedListener(new Component.ClickedListener() {
+            @Override
+            public void onClick(Component component) {
+                clearElements();
+
+                // 保存数据
+                saveCharacterData();
+
+                MainSlice slice = new MainSlice();
+                Intent intent = new Intent();
+                present(slice, intent);
+            }
+        });
+
         left_btn.setClickedListener(new Component.ClickedListener() {
             @Override
             public void onClick(Component component) {
@@ -365,7 +481,7 @@ public class MainAbilitySlice extends AbilitySlice {
         // 道具
         for (int i = 0; i < mapsize; i++) {
             for (int j = 0; j < mapsize; j++) {
-                if (mapElements[i][j] != null) {
+                if (mapElements[i][j] != null && !mapElements[i][j].isUsed()) {
                     Image image = mapElements[i][j].getImage();
                     image.setContentPositionX(mapImage[i][j].getLeft() + mapLayout.getLeft() - 10);
                     image.setContentPositionY(mapImage[i][j].getTop() + mapLayout.getTop() - 10);
@@ -393,9 +509,12 @@ public class MainAbilitySlice extends AbilitySlice {
         down_btn = (Image) findComponentById(ResourceTable.Id_down);
 
 
+
         player = (Image) findComponentById(ResourceTable.Id_player);
         player.setVisibility(Component.INVISIBLE);
         play_bnt = (Button) findComponentById(ResourceTable.Id_play_btn);
+        back_btn = (Button) findComponentById(ResourceTable.Id_back_btn);
+        store_btn = (Button) findComponentById(ResourceTable.Id_store_btn);
 
         int mapLayoutWidth = (int) (pm_px * 0.9);
         mapChipWidth = (int) (mapLayoutWidth / this.mapsize);

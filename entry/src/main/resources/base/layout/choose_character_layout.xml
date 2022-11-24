@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:alignment="horizontal_center"
+    ohos:orientation="vertical">
+
+    <Text
+        ohos:height="match_content"
+        ohos:top_margin="20fp"
+        ohos:width="match_content"
+        ohos:text_size="20fp"
+        ohos:text="请选择人物">
+
+    </Text>
+
+    <ScrollView
+        ohos:height="match_content"
+        ohos:width="match_content">
+
+        <TableLayout
+            ohos:height="match_content"
+            ohos:id="$+id:player_layout"
+
+            ohos:width="match_content">
+
+        </TableLayout>
+
+
+    </ScrollView>
+
+
+
+
+</DirectionalLayout>

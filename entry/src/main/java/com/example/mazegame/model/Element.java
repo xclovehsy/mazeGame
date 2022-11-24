@@ -10,8 +10,17 @@ public class Element {
     private int blood;
     private int aggre;
     private int defense;
+    private boolean isUsed = false;
 
     public Element() {
+    }
+
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
     }
 
     public Element(Image image, int type) {

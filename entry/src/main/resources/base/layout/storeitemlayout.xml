@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:id="$+id:recorditem_layout"
+    ohos:height="match_content"
+    ohos:width="match_parent"
+    ohos:alignment="vertical_center"
+    ohos:margin="3vp"
+    ohos:orientation="horizontal"
+    ohos:padding="5vp">
+
+    <Image
+        ohos:id="$+id:kind_image"
+        ohos:height="60fp"
+        ohos:width="60fp"
+        ohos:image_src="$media:chi3"
+        ohos:left_margin="5fp"
+        ohos:right_margin="5fp"
+        ohos:scale_mode="stretch">
+    </Image>
+
+    <DirectionalLayout
+        ohos:height="match_parent"
+        ohos:width="match_content"
+        ohos:alignment="vertical_center"
+        ohos:orientation="vertical">
+
+        <Text
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="奶油蛋糕"
+            ohos:id="$+id:nametext"
+            ohos:text_size="18fp"
+            ohos:top_margin="5fp">
+
+        </Text>
+
+        <Text
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:id="$+id:describetext"
+            ohos:text="可以增加生命值"
+            ohos:text_size="12fp">
+
+        </Text>
+
+    </DirectionalLayout>
+
+    <DirectionalLayout
+        ohos:height="match_parent"
+        ohos:width="match_content"
+        ohos:alignment="center"
+        ohos:left_margin="10fp"
+        ohos:orientation="vertical">
+
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:alignment="center"
+            ohos:orientation="horizontal">
+
+            <Image
+                ohos:id="$+id:image_1"
+                ohos:height="25fp"
+                ohos:width="25fp"
+                ohos:image_src="$media:dao"
+                ohos:scale_mode="stretch">
+
+            </Image>
+
+            <Text
+                ohos:id="$+id:value_1"
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:left_margin="10fp"
+                ohos:text="10"
+                ohos:text_size="20fp">
+            </Text>
+
+        </DirectionalLayout>
+
+        <DirectionalLayout
+            ohos:id="$+id:improve_2"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:alignment="center"
+            ohos:orientation="horizontal">
+
+            <Image
+                ohos:id="$+id:image_2"
+                ohos:height="25fp"
+                ohos:width="25fp"
+                ohos:image_src="$media:dunpai"
+                ohos:scale_mode="stretch">
+
+            </Image>
+
+            <Text
+                ohos:id="$+id:value_2"
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:left_margin="10fp"
+                ohos:text="10"
+                ohos:text_size="20fp">
+            </Text>
+
+        </DirectionalLayout>
+
+
+    </DirectionalLayout>
+
+    <DirectionalLayout
+        ohos:height="match_parent"
+        ohos:alignment="right"
+        ohos:width="match_parent">
+        <Text
+            ohos:top_margin="15fp"
+            ohos:id="$+id:money_text"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="20￥"
+
+            ohos:text_size="25fp"
+            >
+        </Text>
+
+    </DirectionalLayout>
+
+
+
+
+
+
+
+
+</DirectionalLayout>
+
+
+    <!--<DependentLayout-->
+    <!--    xmlns:ohos="http://schemas.huawei.com/res/ohos"-->
+    <!--    ohos:height="55vp"-->
+    <!--    ohos:width="match_parent"-->
+    <!--    ohos:margin="3vp"-->
+    <!--    ohos:orientation="vertical"-->
+    <!--    ohos:id="$+id:recorditem_layout"-->
+    <!--    ohos:padding="5vp">-->
+
+    <!--    <Image-->
+    <!--        ohos:id="$+id:kind_iamge"-->
+    <!--        ohos:height="60fp"-->
+    <!--        ohos:width="60fp"-->
+    <!--        ohos:right_margin="10fp"-->
+    <!--        ohos:left_margin="5fp"-->
+    <!--        ohos:image_src="$media:chi3"-->
+    <!--        ohos:scale_mode="stretch">-->
+
+    <!--    </Image>-->
+
+
+    <!--    <Text-->
+    <!--        ohos:id="$+id:cateitem"-->
+    <!--        ohos:height="match_content"-->
+    <!--        ohos:width="match_content"-->
+    <!--        ohos:align_parent_top="true"-->
+    <!--        ohos:right_of="$id:kind_iamge"-->
+    <!--        ohos:text="奖学金"-->
+    <!--        ohos:text_size="18fp">-->
+
+    <!--    </Text>-->
+
+    <!--    <Text-->
+    <!--        ohos:id="$+id:recordtime"-->
+    <!--        ohos:height="match_content"-->
+    <!--        ohos:width="match_content"-->
+    <!--        ohos:align_parent_bottom="true"-->
+    <!--        ohos:right_of="$id:kind_iamge"-->
+    <!--        ohos:text="18:52"-->
+    <!--        ohos:bottom_margin="3vp"-->
+    <!--        ohos:text_color="#8B8A87"-->
+    <!--        ohos:text_size="12fp"-->
+
+    <!--        >-->
+    <!--    </Text>-->
+
+    <!--    <Text-->
+    <!--        ohos:id="$+id:memo"-->
+    <!--        ohos:height="match_content"-->
+    <!--        ohos:width="match_content"-->
+    <!--        ohos:align_parent_bottom="true"-->
+    <!--        ohos:bottom_margin="3vp"-->
+    <!--        ohos:right_of="$id:recordtime"-->
+
+    <!--        ohos:left_margin="10fp"-->
+    <!--        ohos:text="二食堂旋转小火锅"-->
+    <!--        ohos:text_color="#8B8A87"-->
+    <!--        ohos:text_size="12fp"-->
+
+    <!--        >-->
+    <!--    </Text>-->
+
+    <!--    <Text-->
+    <!--        ohos:id="$+id:money"-->
+    <!--        ohos:right_margin="10fp"-->
+    <!--        ohos:height="match_content"-->
+    <!--        ohos:width="match_content"-->
+    <!--        ohos:align_parent_right="true"-->
+    <!--        ohos:text="20.00"-->
+    <!--        ohos:text_size="20fp"-->
+    <!--        ohos:top_margin="10vp"-->
+    <!--        >-->
+    <!--    </Text>-->
+
+    <!--</DependentLayout>-->

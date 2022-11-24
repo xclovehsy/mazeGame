@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:alignment="horizontal_center"
+    ohos:orientation="vertical">
+
+    <Text
+        ohos:top_margin="10fp"
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:text="选择关卡"
+        ohos:bottom_margin="10fp"
+        ohos:text_size="30fp"
+        >
+
+    </Text>
+
+    <StackLayout
+        ohos:height="match_parent"
+        ohos:width="match_parent">
+
+        <ListContainer
+            ohos:top_margin="10fp"
+            ohos:height="match_parent"
+            ohos:width="match_parent"
+            ohos:id="$+id:game_item_layout">
+
+        </ListContainer>
+
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:layout_alignment="bottom|right"
+            ohos:orientation="horizontal"
+            ohos:bottom_margin="20fp"
+            ohos:right_margin="10fp"
+            >
+
+            <Image
+                ohos:height="50vp"
+                ohos:width="50vp"
+                ohos:id="$+id:menu_image"
+                ohos:image_src="$media:menu_icon"
+                ohos:margin="10fp"
+                ohos:scale_mode="stretch"
+                >
+
+            </Image>
+
+            <Image
+                ohos:height="50vp"
+                ohos:width="50vp"
+                ohos:margin="10fp"
+                ohos:image_src="$media:back_icon"
+                ohos:id="$+id:back_image"
+                ohos:scale_mode="stretch">
+
+            </Image>
+
+        </DirectionalLayout>
+
+
+
+    </StackLayout>
+
+</DirectionalLayout>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:alignment="horizontal_center"
+    ohos:orientation="vertical">
+
+    <Text
+        ohos:top_margin="10fp"
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:text="购物商城"
+        ohos:text_size="30fp"
+        >
+
+
+    </Text>
+
+    <DirectionalLayout
+        ohos:top_margin="10fp"
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:alignment="center"
+
+        ohos:orientation="horizontal">
+        <Image
+            ohos:height="100fp"
+            ohos:width="100fp"
+            ohos:id="$+id:player_image"
+            ohos:image_src="$media:player1"
+            ohos:scale_mode="stretch"
+            >
+        </Image>
+
+        <DirectionalLayout
+            ohos:left_margin="20fp"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:orientation="vertical">
+
+            <DirectionalLayout
+                ohos:height="match_content"
+                ohos:orientation="horizontal"
+                ohos:alignment="center"
+                ohos:width="match_content">
+                <Image
+                    ohos:height="40fp"
+                    ohos:width="40fp"
+                    ohos:scale_mode="stretch"
+                    ohos:image_src="$media:money">
+
+                </Image>
+                <Text
+                    ohos:height="match_content"
+                    ohos:left_margin="10fp"
+                    ohos:width="match_content"
+                    ohos:text_size="20fp"
+                    ohos:id="$+id:money_text"
+                    ohos:text="10">
+                </Text>
+
+            </DirectionalLayout>
+
+            <DirectionalLayout
+                ohos:height="match_content"
+                ohos:orientation="horizontal"
+                ohos:alignment="center"
+                ohos:width="match_content">
+                <Image
+                    ohos:height="40fp"
+                    ohos:width="40fp"
+                    ohos:scale_mode="stretch"
+                    ohos:image_src="$media:xue">
+
+                </Image>
+                <Text
+                    ohos:height="match_content"
+                    ohos:left_margin="10fp"
+                    ohos:width="match_content"
+                    ohos:text_size="20fp"
+                    ohos:id="$+id:xue_text"
+                    ohos:text="100">
+                </Text>
+
+            </DirectionalLayout>
+
+        </DirectionalLayout>
+
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:left_margin="20fp"
+            ohos:orientation="vertical">
+
+            <DirectionalLayout
+                ohos:height="match_content"
+                ohos:orientation="horizontal"
+                ohos:alignment="center"
+                ohos:width="match_content">
+                <Image
+                    ohos:height="40fp"
+                    ohos:width="40fp"
+                    ohos:scale_mode="stretch"
+                    ohos:image_src="$media:dao">
+
+                </Image>
+                <Text
+                    ohos:height="match_content"
+                    ohos:left_margin="10fp"
+                    ohos:width="match_content"
+                    ohos:text_size="20fp"
+                    ohos:id="$+id:gongji_text"
+                    ohos:text="10">
+                </Text>
+
+            </DirectionalLayout>
+
+            <DirectionalLayout
+                ohos:height="match_content"
+                ohos:orientation="horizontal"
+                ohos:alignment="center"
+                ohos:width="match_content">
+                <Image
+                    ohos:height="40fp"
+                    ohos:width="40fp"
+                    ohos:scale_mode="stretch"
+                    ohos:image_src="$media:dunpai">
+
+                </Image>
+
+                <Text
+                    ohos:height="match_content"
+                    ohos:left_margin="10fp"
+                    ohos:width="match_content"
+                    ohos:text_size="20fp"
+                    ohos:id="$+id:fangyu_text"
+                    ohos:text="10">
+                </Text>
+
+            </DirectionalLayout>
+
+
+        </DirectionalLayout>
+
+    </DirectionalLayout>
+
+    <StackLayout
+        ohos:height="match_parent"
+        ohos:width="match_parent">
+
+        <ListContainer
+            ohos:top_margin="10fp"
+            ohos:height="match_parent"
+            ohos:width="match_parent"
+            ohos:id="$+id:store_item_layout">
+
+        </ListContainer>
+
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:layout_alignment="bottom|right"
+            ohos:orientation="horizontal"
+            ohos:bottom_margin="20fp"
+            ohos:right_margin="10fp"
+            >
+
+            <Image
+                ohos:height="50vp"
+                ohos:width="50vp"
+                ohos:id="$+id:menu_image"
+                ohos:image_src="$media:menu_icon"
+                ohos:margin="10fp"
+                ohos:scale_mode="stretch"
+                >
+
+            </Image>
+
+            <Image
+                ohos:height="50vp"
+                ohos:width="50vp"
+                ohos:margin="10fp"
+                ohos:image_src="$media:back_icon"
+                ohos:id="$+id:back_image"
+                ohos:scale_mode="stretch">
+
+            </Image>
+
+        </DirectionalLayout>
+
+
+
+    </StackLayout>
+
+
+
+
+
+</DirectionalLayout>
