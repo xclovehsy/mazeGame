@@ -102,6 +102,15 @@ public class MainSlice extends AbilitySlice {
             }
         });
 
+        choose_btn.setClickedListener(new Component.ClickedListener() {
+            @Override
+            public void onClick(Component component) {
+                ChooseGameSlice slice = new ChooseGameSlice();
+                Intent intent = new Intent();
+                present(slice, intent);
+            }
+        });
+
 
 
 

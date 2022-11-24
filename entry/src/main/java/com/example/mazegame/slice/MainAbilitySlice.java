@@ -12,7 +12,9 @@ import com.example.mazegame.source.MonsterData;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.*;
+import ohos.agp.utils.LayoutAlignment;
 import ohos.agp.window.dialog.CommonDialog;
+import ohos.agp.window.dialog.ToastDialog;
 import ohos.data.DatabaseHelper;
 import ohos.data.orm.OrmContext;
 import ohos.data.orm.OrmPredicates;
@@ -135,16 +137,32 @@ public class MainAbilitySlice extends AbilitySlice {
 //        HiLog.info(label, "curX="+curX + ", curY="+curY + ", moveX="+x + ", moveY="+y +", map="+map[x][y]);
         if (x >= 0 && x < this.mapsize && y >= 0 && y < this.mapsize && map[x][y] != 1) {
             if (map[x][y] == MapData.finish) {
-                clearElements();
-                int newLevel = Math.max(character.getLevel(), gameLevel+1);
-                character.setLevel(newLevel);
-                // 保存用户数据
-                saveCharacterData();
+                if(gameLevel<new MapData().getGameCount()){
+                    clearElements();
+                    int newLevel = Math.max(character.getLevel(), gameLevel+1);
+                    character.setLevel(newLevel);
+                    // 保存用户数据
+                    saveCharacterData();
 
-                MainAbilitySlice slice = new MainAbilitySlice();
-                Intent intent = new Intent();
-                intent.setParam("gameLevel", newLevel);
-                present(slice, intent);
+                    MainAbilitySlice slice = new MainAbilitySlice();
+                    Intent intent = new Intent();
+                    intent.setParam("gameLevel", newLevel);
+                    present(slice, intent);
+                }else{
+                    // 购买失败
+                    DirectionalLayout toastLayout = (DirectionalLayout) LayoutScatter.getInstance(this)
+                            .parse(ResourceTable.Layout_layout_toast, null, false);
+                    Text text = (Text) toastLayout.findComponentById(ResourceTable.Id_msg_toast);
+                    text.setText("您已通关!");
+                    new ToastDialog(getContext())
+                            .setContentCustomComponent(toastLayout)
+                            .setSize(DirectionalLayout.LayoutConfig.MATCH_CONTENT, DirectionalLayout.LayoutConfig.MATCH_CONTENT)
+                            .setAlignment(LayoutAlignment.CENTER)
+                            .show();
+
+                }
+
+
 
 //                CommonDialog cd = new CommonDialog(getContext());
 //                cd.setCornerRadius(50);

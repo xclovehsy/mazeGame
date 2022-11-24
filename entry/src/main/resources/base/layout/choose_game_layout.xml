@@ -19,15 +19,21 @@
 
     <StackLayout
         ohos:height="match_parent"
+        ohos:layout_alignment="horizontal_center"
         ohos:width="match_parent">
 
-        <ListContainer
-            ohos:top_margin="10fp"
-            ohos:height="match_parent"
-            ohos:width="match_parent"
-            ohos:id="$+id:game_item_layout">
+        <ScrollView
+            ohos:height="match_content"
+            ohos:width="match_content">
+            <TableLayout
+                ohos:height="match_content"
+                ohos:id="$+id:table_layout"
+                ohos:width="match_content">
 
-        </ListContainer>
+            </TableLayout>
+
+
+        </ScrollView>
 
         <DirectionalLayout
             ohos:height="match_content"
@@ -42,22 +48,22 @@
                 ohos:height="50vp"
                 ohos:width="50vp"
                 ohos:id="$+id:menu_image"
-                ohos:image_src="$media:menu_icon"
+                ohos:image_src="$media:back_icon"
                 ohos:margin="10fp"
                 ohos:scale_mode="stretch"
                 >
 
             </Image>
 
-            <Image
-                ohos:height="50vp"
-                ohos:width="50vp"
-                ohos:margin="10fp"
-                ohos:image_src="$media:back_icon"
-                ohos:id="$+id:back_image"
-                ohos:scale_mode="stretch">
+<!--            <Image-->
+<!--                ohos:height="50vp"-->
+<!--                ohos:width="50vp"-->
+<!--                ohos:margin="10fp"-->
+<!--                ohos:image_src="$media:back_icon"-->
+<!--                ohos:id="$+id:back_image"-->
+<!--                ohos:scale_mode="stretch">-->
 
-            </Image>
+<!--            </Image>-->
 
         </DirectionalLayout>
 

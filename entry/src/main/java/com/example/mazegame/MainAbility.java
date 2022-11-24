@@ -1,6 +1,7 @@
 package com.example.mazegame;
 
 import com.example.mazegame.slice.ChooseCharacterSlice;
+import com.example.mazegame.slice.ChooseGameSlice;
 import com.example.mazegame.slice.MainSlice;
 import com.example.mazegame.slice.StoreSlice;
 import ohos.aafwk.ability.Ability;
@@ -14,5 +15,6 @@ public class MainAbility extends Ability {
 //        super.setMainRoute(ChooseCharacterSlice.class.getName());
         super.setMainRoute(MainSlice.class.getName());
 //        super.setMainRoute(StoreSlice.class.getName());
+//        super.setMainRoute(ChooseGameSlice.class.getName());
     }
 }

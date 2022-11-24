@@ -96,6 +96,10 @@ public class MapData {
 
     }
 
+    public int getGameCount(){
+        return map10.length;
+    }
+
 
 
 }
