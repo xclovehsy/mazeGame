@@ -2,7 +2,7 @@
   "string": [
     {
       "name": "entry_MainAbility",
-      "value": "entry_MainAbility"
+      "value": "lovePath"
     },
     {
       "name": "mainability_description",
@@ -11,6 +11,10 @@
     {
       "name": "mainability_HelloWorld",
       "value": "Hello World"
+    },
+    {
+      "name": "lovePath",
+      "value": "lovePath"
     }
   ]
 }

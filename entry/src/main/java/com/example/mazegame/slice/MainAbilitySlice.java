@@ -78,7 +78,7 @@ public class MainAbilitySlice extends AbilitySlice {
 //
 //
 //        character.setIsHaveGirl(true);
-        gameLevel = intent.getIntParam("gameLevel", 1);
+        gameLevel = intent.getIntParam("gameLevel",1 );
 
         isFromfinish = intent.getBooleanParam("isFromfinish", false);
 
@@ -145,6 +145,23 @@ public class MainAbilitySlice extends AbilitySlice {
         player.setPixelMap(character.getPicId());
     }
 
+    private void enableButton(){
+        up_btn.setClickable(true);
+        left_btn.setClickable(true);
+        right_btn.setClickable(true);
+        down_btn.setClickable(true);
+    }
+
+    private void disableButton(){
+        up_btn.setClickable(false);
+        left_btn.setClickable(false);
+        right_btn.setClickable(false);
+        down_btn.setClickable(false);
+
+
+    }
+
+
     /**
      * 移动玩家
      *
@@ -152,6 +169,7 @@ public class MainAbilitySlice extends AbilitySlice {
      * @param moveY
      */
     private void playerMove(int moveX, int moveY) {
+
         int x = curX + moveX, y = curY + moveY;
 //        HiLog.info(label, "curX="+curX + ", curY="+curY + ", moveX="+x + ", moveY="+y +", map="+map[x][y]);
         if (x >= 0 && x < this.mapsize && y >= 0 && y < this.mapsize && map[x][y] != 1) {
@@ -257,7 +275,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
         if (type == MapData.money) {  // 金币
             Random random = new Random();
-            character.setMoney(character.getMoney() + random.nextInt(40) + 10);
+            character.setMoney(character.getMoney() + random.nextInt(50) + 80);
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -272,7 +290,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
         }  else if (type == MapData.shield) {
             Random random = new Random();
-            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(10) + 10));
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(50) + 80));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -285,7 +303,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
             Random random = new Random();
 //            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
-            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(10) + 10));
+            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(50) + 80));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -298,7 +316,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
             Random random = new Random();
 //            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
-            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(10) + 10));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(50) + 80));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -334,7 +352,7 @@ public class MainAbilitySlice extends AbilitySlice {
         }else if(type == MapData.f){
             Random random = new Random();
 //            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
-            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(10) + 10));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(10) + 30));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -346,7 +364,7 @@ public class MainAbilitySlice extends AbilitySlice {
         } else if (type == MapData.g) {
             Random random = new Random();
 //            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
-            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(20) + 20));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(20) + 80));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -358,7 +376,7 @@ public class MainAbilitySlice extends AbilitySlice {
         } else if(type == MapData.h){
             Random random = new Random();
 //            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
-            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(20) + 60));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(50) + 100));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -370,7 +388,7 @@ public class MainAbilitySlice extends AbilitySlice {
         }else if(type == MapData.i){
             Random random = new Random();
 //            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
-            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(10) + 10));
+            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(10) + 50));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -383,7 +401,7 @@ public class MainAbilitySlice extends AbilitySlice {
         }else if(type == MapData.j){
             Random random = new Random();
 //            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
-            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(20) + 20));
+            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(20) + 80));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -395,7 +413,7 @@ public class MainAbilitySlice extends AbilitySlice {
         }else if(type == MapData.m){
             Random random = new Random();
 //            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
-            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(20) + 40));
+            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(50) + 100));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -406,7 +424,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
         }else if(type == MapData.n){
             Random random = new Random();
-            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(10) + 10));
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(10) + 20));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -417,7 +435,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
         }else if(type == MapData.o){
             Random random = new Random();
-            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(20) + 20));
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(20) + 80));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -428,7 +446,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
         }else if(type == MapData.p){
             Random random = new Random();
-            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(20) + 40));
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(50) + 100));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -439,8 +457,8 @@ public class MainAbilitySlice extends AbilitySlice {
 
         }else if(type == MapData.q){
             Random random = new Random();
-            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(100) + 100));
-            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(50) + 50));
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(100) + 200));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(50) + 150));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -453,8 +471,8 @@ public class MainAbilitySlice extends AbilitySlice {
 
         }else if(type == MapData.r){
             Random random = new Random();
-            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(50) + 50));
-            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(100) + 100));
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(50) + 200));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(100) + 200));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -465,7 +483,7 @@ public class MainAbilitySlice extends AbilitySlice {
 
         }else if(type == MapData.s){
             Random random = new Random();
-            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(100) + 100));
+            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(100) + 200));
             setPlayerInfo();
 
             mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
@@ -482,6 +500,7 @@ public class MainAbilitySlice extends AbilitySlice {
     }
 
     private boolean attackMonster(int x, int y) {
+        disableButton();
         Element element = mapElements[x][y];
         CommonDialog cd = new CommonDialog(getContext());
         cd.setCornerRadius(50);
@@ -524,7 +543,7 @@ public class MainAbilitySlice extends AbilitySlice {
 //                    mapElements[x][y] = null;
                     mapElements[x][y].setUsed(true);
                 }
-
+                enableButton();
                 cd.destroy();
             }
         });
@@ -578,6 +597,8 @@ public class MainAbilitySlice extends AbilitySlice {
                                     .setSize(DirectionalLayout.LayoutConfig.MATCH_CONTENT, DirectionalLayout.LayoutConfig.MATCH_CONTENT)
                                     .setAlignment(LayoutAlignment.CENTER)
                                     .show();
+
+                            enableButton();
                             cd.destroy();
                             animatorValue.stop();
 
@@ -607,6 +628,7 @@ public class MainAbilitySlice extends AbilitySlice {
                                     .setSize(DirectionalLayout.LayoutConfig.MATCH_CONTENT, DirectionalLayout.LayoutConfig.MATCH_CONTENT)
                                     .setAlignment(LayoutAlignment.CENTER)
                                     .show();
+                            enableButton();
                             cd.destroy();
                             animatorValue.stop();
 
@@ -984,15 +1006,15 @@ public class MainAbilitySlice extends AbilitySlice {
                     Random random = new Random();
 
                     switch (map[i][j]){
-                        case MapData.k: mapElements[i][j] = new Element(image, map[i][j], "小丑", "你才是小丑", random.nextInt(20) + 20, random.nextInt(20) + 20, random.nextInt(20) + 20); break;
-                        case MapData.l: mapElements[i][j] = new Element(image, map[i][j], "小火龙", "fire！！", random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
-                        case MapData.t: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
-                        case MapData.u: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
-                        case MapData.v: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
-                        case MapData.w: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
-                        case MapData.x: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
-                        case MapData.y: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
-                        case MapData.z: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
+                        case MapData.k: mapElements[i][j] = new Element(image, map[i][j], "小丑", "你才是小丑呢", random.nextInt(20) + 20, random.nextInt(20) + 20, random.nextInt(20) + 20); break;
+                        case MapData.l: mapElements[i][j] = new Element(image, map[i][j], "小火龙", "吃我火球攻击!!", random.nextInt(100) + 300, random.nextInt(20) + 200, random.nextInt(20) + 200); break;
+                        case MapData.t: mapElements[i][j] = new Element(image, map[i][j], "六爪怪", "小心我缠上你",random.nextInt(20) + 130, random.nextInt(20) + 100, random.nextInt(20) + 100); break;
+                        case MapData.u: mapElements[i][j] = new Element(image, map[i][j], "幽灵", "久走夜路必撞我",random.nextInt(20) + 150, random.nextInt(20) + 100, random.nextInt(20) + 100); break;
+                        case MapData.v: mapElements[i][j] = new Element(image, map[i][j], "独眼魔", "一只眼睛也能迷倒你",random.nextInt(20) + 110, random.nextInt(20) + 100, random.nextInt(20) + 100); break;
+                        case MapData.w: mapElements[i][j] = new Element(image, map[i][j], "绿布头", "看你不爽很久了!",random.nextInt(20) + 100, random.nextInt(20) + 100, random.nextInt(20) + 100); break;
+                        case MapData.x: mapElements[i][j] = new Element(image, map[i][j], "猪怪", "正宗大猪怪..",random.nextInt(20) + 100, random.nextInt(20) + 100, random.nextInt(20) + 100); break;
+                        case MapData.y: mapElements[i][j] = new Element(image, map[i][j], "科学怪人", "你聪明的头脑吗",random.nextInt(20) + 100, random.nextInt(20) + 100, random.nextInt(20) + 100); break;
+                        case MapData.z: mapElements[i][j] = new Element(image, map[i][j], "绿巨人", "Hulk!Hulk!",random.nextInt(20) + 200, random.nextInt(20) + 100, random.nextInt(20) + 100); break;
                         default:mapElements[i][j] = new Element(image, map[i][j]); break;
                     }
 

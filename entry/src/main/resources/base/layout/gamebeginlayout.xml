@@ -11,14 +11,14 @@
         ohos:top_margin="150fp"
         ohos:height="match_content"
         ohos:width="match_content"
-        ohos:text="闯关游戏"
+        ohos:text="Love Path"
         ohos:text_color="#ffffff"
         ohos:text_size="60fp">
 
     </Text>
 
     <Button
-        ohos:top_margin="30fp"
+        ohos:top_margin="40fp"
         ohos:height="match_content"
         ohos:width="match_content"
         ohos:text="开始游戏"
@@ -29,7 +29,7 @@
     </Button>
 
     <Button
-        ohos:top_margin="10fp"
+        ohos:top_margin="15fp"
         ohos:height="match_content"
         ohos:width="match_content"
         ohos:text="玩法介绍"
@@ -41,7 +41,7 @@
 
 
     <Button
-        ohos:top_margin="10fp"
+        ohos:top_margin="15fp"
         ohos:height="match_content"
         ohos:width="match_content"
         ohos:text="作者信息"
