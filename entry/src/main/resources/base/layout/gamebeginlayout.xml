@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:background_element="$media:bk13"
+    ohos:alignment="horizontal_center"
+    ohos:orientation="vertical">
+
+    <Text
+        ohos:top_margin="150fp"
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:text="闯关游戏"
+        ohos:text_color="#ffffff"
+        ohos:text_size="60fp">
+
+    </Text>
+
+    <Button
+        ohos:top_margin="30fp"
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:text="开始游戏"
+        ohos:id="$+id:begin_btn"
+        ohos:text_size="35fp"
+        ohos:text_color="#FFFFFF"
+        >
+    </Button>
+
+    <Button
+        ohos:top_margin="10fp"
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:text="玩法介绍"
+        ohos:id="$+id:guide_btn"
+        ohos:text_size="35fp"
+        ohos:text_color="#FFFFFF"
+        >
+    </Button>
+
+
+    <Button
+        ohos:top_margin="10fp"
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:text="作者信息"
+        ohos:id="$+id:info_btn"
+        ohos:text_size="35fp"
+        ohos:text_color="#FFFFFF"
+        >
+    </Button>
+
+
+
+
+</DirectionalLayout>

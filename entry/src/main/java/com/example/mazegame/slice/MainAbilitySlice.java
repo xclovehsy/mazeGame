@@ -11,6 +11,8 @@ import com.example.mazegame.source.MapData;
 import com.example.mazegame.source.MonsterData;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
+import ohos.agp.animation.Animator;
+import ohos.agp.animation.AnimatorValue;
 import ohos.agp.components.*;
 import ohos.agp.utils.LayoutAlignment;
 import ohos.agp.window.dialog.CommonDialog;
@@ -52,8 +54,10 @@ public class MainAbilitySlice extends AbilitySlice {
     private Text level_text, blood_text, aggre_text, defense_text, money_text;
     private int keycnt = 0;
     private int gameLevel = 0;
-    private Button back_btn;
+        private Button back_btn;
+    private Image girl;
     private Button store_btn;
+    private int shift = 30;
 
 
     @Override
@@ -66,6 +70,10 @@ public class MainAbilitySlice extends AbilitySlice {
 
         // 需要传的参数
         character = getCharaterData();  // 从数据库中获取数据
+//        character.setLevel(5);
+//
+//
+//        character.setIsHaveGirl(true);
         gameLevel = intent.getIntParam("gameLevel", 1);
         mapsize = 10;
 
@@ -82,6 +90,8 @@ public class MainAbilitySlice extends AbilitySlice {
         setPlayerInfo();
 
         addClickListener();
+
+//        play_bnt.callOnClick();
     }
 
     /**
@@ -137,9 +147,9 @@ public class MainAbilitySlice extends AbilitySlice {
 //        HiLog.info(label, "curX="+curX + ", curY="+curY + ", moveX="+x + ", moveY="+y +", map="+map[x][y]);
         if (x >= 0 && x < this.mapsize && y >= 0 && y < this.mapsize && map[x][y] != 1) {
             if (map[x][y] == MapData.finish) {
-                if(gameLevel<new MapData().getGameCount()){
+                if (gameLevel < new MapData().getGameCount()) {
                     clearElements();
-                    int newLevel = Math.max(character.getLevel(), gameLevel+1);
+                    int newLevel = Math.max(character.getLevel(), gameLevel + 1);
                     character.setLevel(newLevel);
                     // 保存用户数据
                     saveCharacterData();
@@ -148,8 +158,7 @@ public class MainAbilitySlice extends AbilitySlice {
                     Intent intent = new Intent();
                     intent.setParam("gameLevel", newLevel);
                     present(slice, intent);
-                }else{
-                    // 购买失败
+                } else {
                     DirectionalLayout toastLayout = (DirectionalLayout) LayoutScatter.getInstance(this)
                             .parse(ResourceTable.Layout_layout_toast, null, false);
                     Text text = (Text) toastLayout.findComponentById(ResourceTable.Id_msg_toast);
@@ -159,39 +168,20 @@ public class MainAbilitySlice extends AbilitySlice {
                             .setSize(DirectionalLayout.LayoutConfig.MATCH_CONTENT, DirectionalLayout.LayoutConfig.MATCH_CONTENT)
                             .setAlignment(LayoutAlignment.CENTER)
                             .show();
-
                 }
-
-
-
-//                CommonDialog cd = new CommonDialog(getContext());
-//                cd.setCornerRadius(50);
-//                DirectionalLayout dl = (DirectionalLayout) LayoutScatter.getInstance(getContext()).parse(ResourceTable.Layout_gameover_dialog, null, false);
-//
-//                Button nextGame_btn = (Button) dl.findComponentById(ResourceTable.Id_new_game_btn);
-//                Button replay_btn = (Button) dl.findComponentById(ResourceTable.Id_replay_btn);
-//
-//                nextGame_btn.setClickedListener(new Component.ClickedListener() {
-//                    @Override
-//                    public void onClick(Component component) {
-//                        cd.destroy();
-//                    }
-//                });
-//
-//                replay_btn.setClickedListener(new Component.ClickedListener() {
-//                    @Override
-//                    public void onClick(Component component) {
-//                        cd.destroy();
-//                    }
-//                });
-//
-//                cd.setSize(1000, 1000);
-//                cd.setContentCustomComponent(dl);
-//                cd.show();
-
                 return;
+            }else if(x == beginx && y == beginy){  //回到起点
+                if(gameLevel!=1){
+                    clearElements();
+                    // 保存用户数据
+                    saveCharacterData();
 
-
+                    MainAbilitySlice slice = new MainAbilitySlice();
+                    Intent intent = new Intent();
+                    intent.setParam("gameLevel", gameLevel-1);
+                    present(slice, intent);
+                }
+                return;
             } else if (map[x][y] == 3) {//men
                 if (keycnt > 0) {
                     keycnt -= 1;
@@ -210,8 +200,13 @@ public class MainAbilitySlice extends AbilitySlice {
             // 移动
             curX = x;
             curY = y;
-            player.setContentPositionX(mapImage[x][y].getLeft() + mapLayout.getLeft());
-            player.setContentPositionY(mapImage[x][y].getTop() + mapLayout.getTop());
+            if (character.isIsHaveGirl()) {
+                girl.setContentPositionX(player.getContentPositionX());
+                girl.setContentPositionY(player.getContentPositionY());
+            }
+
+            player.setContentPositionX(mapImage[x][y].getLeft() + mapLayout.getLeft() + shift);
+            player.setContentPositionY(mapImage[x][y].getTop() + mapLayout.getTop() + shift);
         }
     }
 
@@ -236,15 +231,11 @@ public class MainAbilitySlice extends AbilitySlice {
             mapElements[x][y].setUsed(true);
             return true;
 
-        } else if (type == MapData.small_monster) {
+        } else if (type == MapData.small_monster || type == MapData.big_monster || (type>=MapData.t && type<=MapData.z)) {
             return attackMonster(x, y);
 //            return true;
 
-
-        } else if (type == MapData.big_monster) {
-            return attackMonster(x, y);
-
-        } else if (type == MapData.shield) {
+        }  else if (type == MapData.shield) {
             Random random = new Random();
             character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(10) + 10));
             setPlayerInfo();
@@ -288,7 +279,168 @@ public class MainAbilitySlice extends AbilitySlice {
 //            mapElements[x][y] = null;
             mapElements[x][y].setUsed(true);
             return true;
+        } else if (type == MapData.girl) {
+            character.setIsHaveGirl(true);
+            girl = mapElements[x][y].getImage();
+            map[x][y] = 0;
+            mapElements[x][y].setUsed(true);
+
+            DirectionalLayout toastLayout = (DirectionalLayout) LayoutScatter.getInstance(this)
+                    .parse(ResourceTable.Layout_layout_toast, null, false);
+            Text text = (Text) toastLayout.findComponentById(ResourceTable.Id_msg_toast);
+            text.setText("你好呀！");
+            new ToastDialog(getContext())
+                    .setContentCustomComponent(toastLayout)
+                    .setSize(DirectionalLayout.LayoutConfig.MATCH_CONTENT, DirectionalLayout.LayoutConfig.MATCH_CONTENT)
+                    .setAlignment(LayoutAlignment.CENTER)
+                    .show();
+
+            return false;
+        }else if(type == MapData.f){
+            Random random = new Random();
+//            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(10) + 10));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+        } else if (type == MapData.g) {
+            Random random = new Random();
+//            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(20) + 20));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+        } else if(type == MapData.h){
+            Random random = new Random();
+//            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(20) + 60));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+        }else if(type == MapData.i){
+            Random random = new Random();
+//            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
+            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(10) + 10));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+
+        }else if(type == MapData.j){
+            Random random = new Random();
+//            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
+            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(20) + 20));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+        }else if(type == MapData.m){
+            Random random = new Random();
+//            character.setDefense(Math.min(character.getLevel()*100, character.getDefense()+random.nextInt(10)+10));
+            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(20) + 40));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+        }else if(type == MapData.n){
+            Random random = new Random();
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(10) + 10));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+        }else if(type == MapData.o){
+            Random random = new Random();
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(20) + 20));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+        }else if(type == MapData.p){
+            Random random = new Random();
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(20) + 40));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+        }else if(type == MapData.q){
+            Random random = new Random();
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(100) + 100));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(50) + 50));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+
+
+        }else if(type == MapData.r){
+            Random random = new Random();
+            character.setDefense(Math.min(character.getLevel() * 100, character.getDefense() + random.nextInt(50) + 50));
+            character.setBlood(Math.min(character.getLevel() * 100, character.getBlood() + random.nextInt(100) + 100));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
+        }else if(type == MapData.s){
+            Random random = new Random();
+            character.setAggressivity(Math.min(character.getLevel() * 100, character.getAggressivity() + random.nextInt(100) + 100));
+            setPlayerInfo();
+
+            mapElements[x][y].getImage().setVisibility(Image.INVISIBLE);
+            map[x][y] = 0;
+//            mapElements[x][y] = null;
+            mapElements[x][y].setUsed(true);
+            return true;
+
         }
+
 
 
         return true;
@@ -307,6 +459,12 @@ public class MainAbilitySlice extends AbilitySlice {
         Text mon_defense = (Text) dl.findComponentById(ResourceTable.Id_fang_monster);
         Text mon_blood = (Text) dl.findComponentById(ResourceTable.Id_xue_monster);
 
+        Text mon_name = (Text) dl.findComponentById(ResourceTable.Id_monster_name);
+        Text mon_memo = (Text) dl.findComponentById(ResourceTable.Id_monster_memo);
+        mon_name.setText(element.getName());
+        mon_memo.setText(element.getDialog());
+
+
         play_aggre.setText(character.getAggressivity() + "");
         play_defense.setText(character.getDefense() + "");
         play_blood.setText(character.getBlood() + "");
@@ -318,6 +476,7 @@ public class MainAbilitySlice extends AbilitySlice {
         Image monster_image = (Image) dl.findComponentById(ResourceTable.Id_monster_image);
         play_image.setPixelMap(character.getPicId());
         monster_image.setPixelMap(new MonsterData().getMonsterImageId(element.getType()));
+        monster_image.setPixelMap(element.getImage().getPixelMap());
 
         Button give_up = (Button) dl.findComponentById(ResourceTable.Id_give_up_btn);
         Button attack = (Button) dl.findComponentById(ResourceTable.Id_attack_btn);
@@ -349,13 +508,80 @@ public class MainAbilitySlice extends AbilitySlice {
                 int play_attack_ = (int) (character.getAggressivity() * (float) (random.nextInt(20) + 80) / 100);
                 int mon_attack_ = (int) (element.getAggre() * (float) (random.nextInt(20) + 80) / 100);
 
-                play_blood.setText(play_blood_ + "");
-                mon_blood.setText(mon_blood_ + "");
 
-                play_aggre.setText(play_attack_ + "");
-                play_defense.setText(play_defense_ + "");
-                mon_aggre.setText(mon_attack_ + "");
-                mon_defense.setText(mon_defense_ + "");
+                int beginBlood = character.getBlood();
+                int endBlood = character.getBlood() - sub_blood_play;
+                int beginBlood_mon = element.getBlood();
+                int endBlood_mon = element.getBlood() - sub_blood_mon;
+
+                int beginAggre = character.getAggressivity();
+                int beginAggre_mon = element.getAggre();
+                int beginDefense = character.getDefense();
+                int beginDefense_mon = element.getDefense();
+
+                AnimatorValue animatorValue = new AnimatorValue();
+                animatorValue.setDuration(1000);
+                animatorValue.setValueUpdateListener(new AnimatorValue.ValueUpdateListener() {
+                    @Override
+                    public void onUpdate(AnimatorValue animatorValue, float v) {
+//                        HiLog.info(label, "animatorValue=" + v);
+                        play_blood.setText((int) (beginBlood - (beginBlood - endBlood) * v) + "");
+                        mon_blood.setText((int) (beginBlood_mon - (beginBlood_mon - endBlood_mon) * v) + "");
+
+                        play_aggre.setText((int) (beginAggre - (beginAggre - play_attack_) * v) + "");
+                        play_defense.setText((int) (beginDefense - (beginDefense - play_defense_) * v) + "");
+                        mon_aggre.setText((int) (beginAggre_mon - (beginAggre_mon - mon_attack_) * v) + "");
+                        mon_defense.setText((int) (beginDefense_mon - (beginDefense_mon - mon_defense_) * v) + "");
+
+                        if (play_blood_ <= 0) {
+                            DirectionalLayout toastLayout = (DirectionalLayout) LayoutScatter.getInstance(getContext())
+                                    .parse(ResourceTable.Layout_layout_toast, null, false);
+                            Text text = (Text) toastLayout.findComponentById(ResourceTable.Id_msg_toast);
+                            text.setText("您被怪物击败了!");
+                            new ToastDialog(getContext())
+                                    .setContentCustomComponent(toastLayout)
+                                    .setSize(DirectionalLayout.LayoutConfig.MATCH_CONTENT, DirectionalLayout.LayoutConfig.MATCH_CONTENT)
+                                    .setAlignment(LayoutAlignment.CENTER)
+                                    .show();
+                            cd.destroy();
+                            animatorValue.stop();
+
+
+                            // 设置新的人物
+
+                            newBegin();
+
+                            clearElements();
+
+                            // 保存数据
+                            saveCharacterData();
+
+                            MainSlice slice = new MainSlice();
+                            Intent intent = new Intent();
+                            present(slice, intent);
+                        }
+
+                        if (mon_blood_ <= 0) {
+
+                            DirectionalLayout toastLayout = (DirectionalLayout) LayoutScatter.getInstance(getContext())
+                                    .parse(ResourceTable.Layout_layout_toast, null, false);
+                            Text text = (Text) toastLayout.findComponentById(ResourceTable.Id_msg_toast);
+                            text.setText("怪物已被你击败!");
+                            new ToastDialog(getContext())
+                                    .setContentCustomComponent(toastLayout)
+                                    .setSize(DirectionalLayout.LayoutConfig.MATCH_CONTENT, DirectionalLayout.LayoutConfig.MATCH_CONTENT)
+                                    .setAlignment(LayoutAlignment.CENTER)
+                                    .show();
+                            cd.destroy();
+                            animatorValue.stop();
+
+                            element.getImage().setVisibility(Image.INVISIBLE);
+                            map[x][y] = 0;
+                            mapElements[x][y].setUsed(true);
+                        }
+                    }
+                });
+                animatorValue.start();
 
                 character.setBlood(play_blood_);
                 character.setDefense(play_defense_);
@@ -366,18 +592,6 @@ public class MainAbilitySlice extends AbilitySlice {
                 element.setAggre(mon_attack_);
                 element.setDefense(mon_defense_);
 
-//                try {
-//                    Thread.sleep(2000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                cd.destroy();
-//                if(mon_blood_<=0){
-//
-//                    return true;
-//                }
-//              Text mon_blood =   cd.destroy();
             }
         });
 
@@ -386,6 +600,58 @@ public class MainAbilitySlice extends AbilitySlice {
         cd.setContentCustomComponent(dl);
         cd.show();
         return false;
+    }
+
+    /**
+     * 更新数据
+     */
+    private void newBegin() {
+
+        Character temp = null;
+        //         ormContext为对象数据库的操作接口，之后的增删等操作都是通过该对象进行操作
+        DatabaseHelper helper = new DatabaseHelper(this);
+        OrmContext ormContext = helper.getOrmContext(Const.DB_ALIAS, Const.DB_NAME, CharacterDbStore.class);
+
+        OrmPredicates ormPredicates = ormContext.where(Character.class).equalTo("id", Const.playerId);
+
+        List<Character> recordList = ormContext.query(ormPredicates);
+
+        if (recordList.isEmpty()) {
+            temp = new Character(5201314, "player", "又是美好的一天", false, ResourceTable.Media_girl1,
+                    ResourceTable.Media_player1, 99, 50, 50, 1, 520);
+            ormContext.insert(temp);   //插入内存
+            HiLog.info(label, "insertCharacter:" + temp.toString());
+
+        } else {
+            temp = recordList.get(0);
+
+        }
+
+        temp.setName("player");
+        temp.setDialog("又是美好的一天");
+        temp.setIsHaveGirl(false);
+        temp.setGrilId(ResourceTable.Media_girl1);
+        temp.setPicId(ResourceTable.Media_player1);
+        temp.setBlood(99);
+        temp.setAggressivity(50);
+        temp.setDefense(50);
+        temp.setLevel(1);
+        temp.setMoney(520);
+
+
+        if (ormContext.update(temp)) {
+            HiLog.info(label, "updataCharacter success " + character.toString());
+        } else {
+            HiLog.info(label, "updataCharacter fail " + character.toString());
+        }
+
+        ormContext.flush();
+        ormContext.close();
+
+        character = temp;
+        setPlayerInfo();
+
+
     }
 
     /**
@@ -404,15 +670,18 @@ public class MainAbilitySlice extends AbilitySlice {
         ormContext.close();
     }
 
-    private void clearElements(){
-        for(int i = 0; i<mapsize; i++){
-            for(int j = 0; j<mapsize;j++){
-                if(mapElements[i][j]!=null){
+    private void clearElements() {
+        for (int i = 0; i < mapsize; i++) {
+            for (int j = 0; j < mapsize; j++) {
+                if (mapElements[i][j] != null) {
                     mainLayout.removeComponent(mapElements[i][j].getImage());
                 }
             }
         }
 
+        if (character.isIsHaveGirl()) {
+            mainLayout.removeComponent(girl);
+        }
     }
 
     private void addClickListener() {
@@ -464,6 +733,7 @@ public class MainAbilitySlice extends AbilitySlice {
             @Override
             public void onClick(Component component) {
                 playerMove(-1, 0);
+//                play_bnt.callOnClick();
             }
         });
 
@@ -493,19 +763,25 @@ public class MainAbilitySlice extends AbilitySlice {
         player.setVisibility(Component.VISIBLE);
         curX = beginx;
         curY = beginy;
-        player.setContentPositionX(mapImage[beginx][beginy].getLeft() + mapLayout.getLeft());
-        player.setContentPositionY(mapImage[beginx][beginy].getTop() + mapLayout.getTop());
+        player.setContentPositionX(mapImage[beginx][beginy].getLeft() + mapLayout.getLeft() + shift);
+        player.setContentPositionY(mapImage[beginx][beginy].getTop() + mapLayout.getTop() + shift);
 
         // 道具
         for (int i = 0; i < mapsize; i++) {
             for (int j = 0; j < mapsize; j++) {
                 if (mapElements[i][j] != null && !mapElements[i][j].isUsed()) {
                     Image image = mapElements[i][j].getImage();
-                    image.setContentPositionX(mapImage[i][j].getLeft() + mapLayout.getLeft() - 10);
-                    image.setContentPositionY(mapImage[i][j].getTop() + mapLayout.getTop() - 10);
+                    image.setContentPositionX(mapImage[i][j].getLeft() + mapLayout.getLeft() - 10 + shift);
+                    image.setContentPositionY(mapImage[i][j].getTop() + mapLayout.getTop() - 10 + shift);
                     image.setVisibility(Image.VISIBLE);
                 }
             }
+        }
+
+        if (character.isIsHaveGirl()) {
+            girl.setVisibility(Image.VISIBLE);
+            girl.setContentPositionX(mapImage[beginx][beginy].getLeft() + mapLayout.getLeft() + shift);
+            girl.setContentPositionY(mapImage[beginx][beginy].getTop() + mapLayout.getTop() + shift);
         }
 
     }
@@ -525,7 +801,6 @@ public class MainAbilitySlice extends AbilitySlice {
         right_btn = (Image) findComponentById(ResourceTable.Id_right);
         up_btn = (Image) findComponentById(ResourceTable.Id_up);
         down_btn = (Image) findComponentById(ResourceTable.Id_down);
-
 
 
         player = (Image) findComponentById(ResourceTable.Id_player);
@@ -595,49 +870,69 @@ public class MainAbilitySlice extends AbilitySlice {
                         case MapData.finish:
                             image.setPixelMap(ResourceTable.Media_finish);
                             break;
-                        case MapData.money:
-                            image.setPixelMap(ResourceTable.Media_money);
+                        case MapData.girl:
+                            image.setPixelMap(ResourceTable.Media_girl1);
                             break;
-                        case MapData.shield:
-                            image.setPixelMap(ResourceTable.Media_dunpai);
-                            break;
-                        case MapData.sword:
-                            image.setPixelMap(ResourceTable.Media_dao);
-                            break;
-                        case MapData.aid:
-                            image.setPixelMap(ResourceTable.Media_aid);
-                            break;
-                        case MapData.small_monster:
-                            image.setPixelMap(ResourceTable.Media_monster_small);
-                            break;
-                        case MapData.big_monster:
-                            image.setPixelMap(ResourceTable.Media_monster_big);
-                            break;
-                        case MapData.key:
-                            image.setPixelMap(ResourceTable.Media_key);
-                            break;
+                        case MapData.a: image.setPixelMap(ResourceTable.Media_money); break;
+                        case MapData.b: image.setPixelMap(ResourceTable.Media_dunpai); break;
+                        case MapData.c: image.setPixelMap(ResourceTable.Media_dao); break;
+                        case MapData.d: image.setPixelMap(ResourceTable.Media_aid); break;
+                        case MapData.e: image.setPixelMap(ResourceTable.Media_key); break;
+                        case MapData.f: image.setPixelMap(ResourceTable.Media_chi1); break;
+                        case MapData.g: image.setPixelMap(ResourceTable.Media_chi2); break;
+                        case MapData.h: image.setPixelMap(ResourceTable.Media_chi3); break;
+                        case MapData.i: image.setPixelMap(ResourceTable.Media_dao1); break;
+                        case MapData.j: image.setPixelMap(ResourceTable.Media_dao2); break;
+                        case MapData.k: image.setPixelMap(ResourceTable.Media_monster_small); break;
+                        case MapData.l: image.setPixelMap(ResourceTable.Media_monster_big); break;
+                        case MapData.m: image.setPixelMap(ResourceTable.Media_dao3); break;
+                        case MapData.n: image.setPixelMap(ResourceTable.Media_fangyu1); break;
+                        case MapData.o: image.setPixelMap(ResourceTable.Media_fangyu2); break;
+                        case MapData.p: image.setPixelMap(ResourceTable.Media_fangyu3); break;
+                        case MapData.q: image.setPixelMap(ResourceTable.Media_yaosui1); break;
+                        case MapData.r: image.setPixelMap(ResourceTable.Media_yaosui2); break;
+                        case MapData.s: image.setPixelMap(ResourceTable.Media_yaosui3); break;
+                        case MapData.t: image.setPixelMap(ResourceTable.Media_guai1); break;
+                        case MapData.u: image.setPixelMap(ResourceTable.Media_guai2); break;
+                        case MapData.v: image.setPixelMap(ResourceTable.Media_guai3); break;
+                        case MapData.w: image.setPixelMap(ResourceTable.Media_guai4); break;
+                        case MapData.x: image.setPixelMap(ResourceTable.Media_guai5); break;
+                        case MapData.y: image.setPixelMap(ResourceTable.Media_guai6); break;
+                        case MapData.z: image.setPixelMap(ResourceTable.Media_guai7); break;
                         default:
                             image.setPixelMap(ResourceTable.Media_money);
                             break;
-
                     }
                     image.setScaleMode(Image.ScaleMode.STRETCH);
-                    image.setWidth((int) (mapChipWidth * 1.2));
-                    image.setHeight((int) (mapChipWidth * 1.2));
-                    mainLayout.addComponent(image);
-                    image.setVisibility(Component.INVISIBLE);
-
-                    if (map[i][j] == MapData.small_monster) {
-                        Random random = new Random();
-                        //Image image, int type, String name, String dialog, int blood, int ai ggre, int defense
-                        mapElements[i][j] = new Element(image, map[i][j], "小丑", "你才是小丑", random.nextInt(20) + 20, random.nextInt(20) + 20, random.nextInt(20) + 20);
-                    } else if (map[i][j] == MapData.big_monster) {
-                        Random random = new Random();
-                        Random random1 = new Random();
-                        mapElements[i][j] = new Element(image, map[i][j], "小火龙", "fire！！", random1.nextInt(20) + 40, random.nextInt(20) + 40, random1.nextInt(20) + 40);
-//                        mapElements[i][j] = new Element(image, map[i][j]);
+                    if (map[i][j] == 4) {
+                        image.setWidth((int) (mapChipWidth));
+                        image.setHeight((int) (mapChipWidth));
+                        if (!character.isIsHaveGirl()) {
+                            mainLayout.addComponent(image);
+                        } else {
+                            map[i][j] = 0;
+                        }
+                        image.setVisibility(Component.INVISIBLE);
                     } else {
-                        mapElements[i][j] = new Element(image, map[i][j]);
+                        image.setWidth((int) (mapChipWidth * 1.2));
+                        image.setHeight((int) (mapChipWidth * 1.2));
+                        mainLayout.addComponent(image);
+                        image.setVisibility(Component.INVISIBLE);
+                    }
+
+                    Random random = new Random();
+
+                    switch (map[i][j]){
+                        case MapData.k: mapElements[i][j] = new Element(image, map[i][j], "小丑", "你才是小丑", random.nextInt(20) + 20, random.nextInt(20) + 20, random.nextInt(20) + 20); break;
+                        case MapData.l: mapElements[i][j] = new Element(image, map[i][j], "小火龙", "fire！！", random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
+                        case MapData.t: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
+                        case MapData.u: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
+                        case MapData.v: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
+                        case MapData.w: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
+                        case MapData.x: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
+                        case MapData.y: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
+                        case MapData.z: mapElements[i][j] = new Element(image, map[i][j], "guai", "memo",random.nextInt(20) + 40, random.nextInt(20) + 40, random.nextInt(20) + 40); break;
+                        default:mapElements[i][j] = new Element(image, map[i][j]); break;
                     }
 
                 }
@@ -646,6 +941,29 @@ public class MainAbilitySlice extends AbilitySlice {
         }
 
 
+        // 添加起点
+        Image begin_point = new Image(this);
+        begin_point.setPixelMap(ResourceTable.Media_begin);
+        begin_point.setScaleMode(Image.ScaleMode.STRETCH);
+
+        begin_point.setWidth((int) (mapChipWidth * 1.2));
+        begin_point.setHeight((int) (mapChipWidth * 1.2));
+        mainLayout.addComponent(begin_point);
+        begin_point.setVisibility(Component.INVISIBLE);
+        mapElements[beginx][beginy] = new Element(begin_point, map[beginx][beginy]);
+
+
+        // 添加女孩
+        if (character.isIsHaveGirl()) {
+            girl = new Image(this);
+            girl.setPixelMap(character.getGrilId());
+            girl.setScaleMode(Image.ScaleMode.STRETCH);
+            girl.setWidth((int) (mapChipWidth));
+            girl.setHeight((int) (mapChipWidth));
+            mainLayout.addComponent(girl);
+            girl.setVisibility(Component.INVISIBLE);
+
+        }
 //        player.setContentPosition();
 
 

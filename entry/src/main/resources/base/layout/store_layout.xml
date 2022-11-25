@@ -4,9 +4,11 @@
     ohos:height="match_parent"
     ohos:width="match_parent"
     ohos:alignment="horizontal_center"
+    ohos:background_element="$media:bk16"
     ohos:orientation="vertical">
 
     <Text
+        ohos:text_color="#FFFFFF"
         ohos:top_margin="10fp"
         ohos:height="match_content"
         ohos:width="match_content"
@@ -52,6 +54,7 @@
 
                 </Image>
                 <Text
+                    ohos:text_color="#FFFFFF"
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
                     ohos:width="match_content"
@@ -75,6 +78,7 @@
 
                 </Image>
                 <Text
+                    ohos:text_color="#FFFFFF"
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
                     ohos:width="match_content"
@@ -106,6 +110,7 @@
 
                 </Image>
                 <Text
+                    ohos:text_color="#FFFFFF"
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
                     ohos:width="match_content"
@@ -122,6 +127,7 @@
                 ohos:alignment="center"
                 ohos:width="match_content">
                 <Image
+
                     ohos:height="40fp"
                     ohos:width="40fp"
                     ohos:scale_mode="stretch"
@@ -130,6 +136,7 @@
                 </Image>
 
                 <Text
+                    ohos:text_color="#FFFFFF"
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
                     ohos:width="match_content"

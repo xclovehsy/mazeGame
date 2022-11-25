@@ -3,12 +3,14 @@
     xmlns:ohos="http://schemas.huawei.com/res/ohos"
     ohos:height="match_parent"
     ohos:width="match_parent"
+    ohos:background_element="$media:bk18"
     ohos:alignment="horizontal_center"
     ohos:orientation="vertical">
 
     <Text
         ohos:top_margin="10fp"
         ohos:height="match_content"
+        ohos:text_color="#FFFFFF"
         ohos:width="match_content"
         ohos:text="选择关卡"
         ohos:bottom_margin="10fp"

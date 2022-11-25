@@ -3,33 +3,31 @@
     xmlns:ohos="http://schemas.huawei.com/res/ohos"
     ohos:id="$+id:game_layout"
     ohos:height="match_parent"
+    ohos:background_element="$media:bk11"
     ohos:width="match_parent"
     ohos:alignment="horizontal_center"
     ohos:orientation="vertical">
 
 
     <TableLayout
+        ohos:padding="10fp"
         ohos:id="$+id:map_layout"
         ohos:height="match_content"
         ohos:width="match_content"
         ohos:layout_alignment="center"
+        ohos:background_element="$graphic:button"
         ohos:orientation="vertical"
         ohos:top_margin="20fp">
 
     </TableLayout>
 
-    <Image
-        ohos:id="$+id:player"
-        ohos:height="100"
-        ohos:width="100"
-        ohos:image_src="$media:player1"
-        ohos:scale_mode="stretch"
-     
-        >
-    </Image>
+<!--    ohos:background_element="#FFFAF3CC"-->
+
+
 
 
     <DirectionalLayout
+        ohos:top_margin="10fp"
         ohos:height="match_content"
         ohos:orientation="horizontal"
         ohos:alignment="center"
@@ -54,6 +52,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:level_text"
@@ -77,6 +76,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:xue_text"
@@ -100,6 +100,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:gongji_text"
@@ -124,6 +125,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:fangyu_text"
@@ -147,6 +149,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:money_text"
@@ -159,7 +162,7 @@
 
         <TableLayout
             ohos:height="match_content"
-            ohos:left_margin="10fp"
+
             ohos:width="match_content"
             ohos:row_count="3"
             ohos:column_count="3">
@@ -173,8 +176,8 @@
             </Image>
 
             <Image
-                ohos:height="60fp"
-                ohos:width="60fp"
+                ohos:height="70fp"
+                ohos:width="70fp"
                 ohos:scale_mode="stretch"
                 ohos:id="$+id:up"
                 ohos:image_src="$media:up">
@@ -190,8 +193,8 @@
             </Image>
 
             <Image
-                ohos:height="60fp"
-                ohos:width="60fp"
+                ohos:height="70fp"
+                ohos:width="70fp"
                 ohos:scale_mode="stretch"
                 ohos:id="$+id:left"
                 ohos:image_src="$media:left">
@@ -207,8 +210,8 @@
             </Image>
 
             <Image
-                ohos:height="60fp"
-                ohos:width="60fp"
+                ohos:height="70fp"
+                ohos:width="70fp"
                 ohos:scale_mode="stretch"
                 ohos:id="$+id:right"
                 ohos:image_src="$media:right">
@@ -224,8 +227,8 @@
             </Image>
 
             <Image
-                ohos:height="60fp"
-                ohos:width="60fp"
+                ohos:height="70fp"
+                ohos:width="70fp"
                 ohos:scale_mode="stretch"
                 ohos:id="$+id:down"
                 ohos:image_src="$media:down">
@@ -248,32 +251,71 @@
 
 
     </DirectionalLayout>
-    <Button
-        ohos:height="match_content"
-        ohos:width="match_content"
-        ohos:text="开始游戏"
-        ohos:text_size="20fp"
-        ohos:id="$+id:play_btn"
-        >
-    </Button>
 
-    <Button
+    <DirectionalLayout
         ohos:height="match_content"
         ohos:width="match_content"
-        ohos:text="购物商城"
-        ohos:text_size="20fp"
-        ohos:id="$+id:store_btn"
+        ohos:alignment="center"
+        ohos:orientation="horizontal"
         >
-    </Button>
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:orientation="vertical"
+            ohos:width="match_content">
 
-    <Button
-        ohos:height="match_content"
-        ohos:width="match_content"
-        ohos:text="返回界面"
-        ohos:text_size="20fp"
-        ohos:id="$+id:back_btn"
+            <Button
+                ohos:height="45fp"
+                ohos:width="110fp"
+                ohos:text_color="#FFFFFF"
+                ohos:background_element="$media:button"
+                ohos:text="购物商城"
+                ohos:text_size="20fp"
+                ohos:id="$+id:store_btn"
+                >
+            </Button>
+
+            <Button
+                ohos:height="45fp"
+                ohos:width="110fp"
+                ohos:text_color="#FFFFFF"
+                ohos:background_element="$media:button"
+                ohos:text="返回界面"
+                ohos:text_size="20fp"
+                ohos:id="$+id:back_btn"
+                >
+            </Button>
+
+
+        </DirectionalLayout>
+
+
+
+        <Button
+            ohos:height="60fp"
+            ohos:width="150fp"
+            ohos:text_color="#FFFFFF"
+            ohos:left_margin="5fp"
+            ohos:background_element="$media:button"
+            ohos:text="开始游戏"
+            ohos:text_size="20fp"
+            ohos:id="$+id:play_btn"
+            >
+        </Button>
+
+    </DirectionalLayout>
+
+
+
+
+    <Image
+        ohos:id="$+id:player"
+        ohos:height="100"
+        ohos:width="100"
+        ohos:image_src="$media:player1"
+        ohos:scale_mode="stretch"
+
         >
-    </Button>
+    </Image>
 
 
 

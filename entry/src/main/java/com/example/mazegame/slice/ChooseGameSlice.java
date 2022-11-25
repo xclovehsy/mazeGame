@@ -99,17 +99,9 @@ public class ChooseGameSlice extends AbilitySlice {
 
     private void initComponent() {
         menu_image = (Image) findComponentById(ResourceTable.Id_menu_image);
-//        Image menu_image = (Image) findComponentById(ResourceTable.Media_menu_icon);
-//        menu_image.setClickedListener(new Component.ClickedListener() {
-//            @Override
-//            public void onClick(Component component) {
-//                MainSlice slice = new MainSlice();
-//                Intent intent = new Intent();
-//                present(slice, intent);
-//            }
-//        });
 
         TableLayout tableLayout = (TableLayout) findComponentById(ResourceTable.Id_table_layout);
+        tableLayout.removeAllComponents();
 
         tableLayout.setColumnCount(2);
         tableLayout.setRowCount((int)Math.ceil((float)gameCnt/2));
@@ -126,6 +118,7 @@ public class ChooseGameSlice extends AbilitySlice {
                 ShapeElement shapeElement = new ShapeElement();
                 // 设置红色背景
                 shapeElement.setRgbColor(new RgbColor(40, 175, 234));
+                shapeElement.setCornerRadius((float) 40);
                 button.setBackground(shapeElement);
                 int finalI = i;
                 button.setClickedListener(new Component.ClickedListener() {
@@ -142,6 +135,7 @@ public class ChooseGameSlice extends AbilitySlice {
             }else{
                 ShapeElement shapeElement = new ShapeElement();
                 // 设置红色背景
+                shapeElement.setCornerRadius((float) 40);
                 shapeElement.setRgbColor(new RgbColor(159, 217, 243));
                 button.setBackground(shapeElement);
                 button.setClickable(false);

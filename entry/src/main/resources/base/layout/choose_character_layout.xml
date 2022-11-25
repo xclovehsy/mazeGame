@@ -3,15 +3,19 @@
     xmlns:ohos="http://schemas.huawei.com/res/ohos"
     ohos:height="match_parent"
     ohos:width="match_parent"
+    ohos:background_element="$media:bk17"
     ohos:alignment="horizontal_center"
     ohos:orientation="vertical">
 
     <Text
         ohos:height="match_content"
-        ohos:top_margin="20fp"
+        ohos:top_margin="10fp"
+        ohos:text_color="#FFFFFF"
         ohos:width="match_content"
-        ohos:text_size="20fp"
-        ohos:text="请选择人物">
+        ohos:text_size="30fp"
+        ohos:bottom_margin="10fp"
+
+        ohos:text="请选择发型">
 
     </Text>
 

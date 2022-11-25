@@ -2,13 +2,34 @@
 <DirectionalLayout
     xmlns:ohos="http://schemas.huawei.com/res/ohos"
     ohos:height="match_content"
-    ohos:margin="20fp"
+    ohos:padding="20fp"
     ohos:width="match_content"
+    ohos:background_element="#6FDDAB6E"
     ohos:alignment="center"
     ohos:orientation="vertical">
+    <Text
+        ohos:height="match_content"
+        ohos:text_size="30fp"
+        ohos:id="$+id:monster_name"
+        ohos:width="match_content"
+        ohos:text="科学怪人">
+
+    </Text>
+
+    <Text
+        ohos:height="match_content"
+        ohos:id="$+id:monster_memo"
+        ohos:top_margin="5fp"
+        ohos:text_size="20fp"
+        ohos:width="match_content"
+        ohos:text="不热爱科学的孩子不乖">
+
+    </Text>
+
     <DirectionalLayout
         ohos:height="match_content"
         ohos:width="match_content"
+        ohos:top_margin="5fp"
         ohos:alignment="center"
         ohos:layout_alignment="center"
         ohos:orientation="horizontal">
@@ -223,22 +244,22 @@
             ohos:id="$+id:give_up_btn"
             ohos:text="放弃挑战"
             ohos:text_size="20fp"
-            ohos:background_element="#DABCE97E"
+            ohos:background_element="$media:button"
             ohos:text_color="#FFFFFF"
-            ohos:height="match_content"
-            ohos:width="95fp"
+            ohos:height="40fp"
+            ohos:width="110fp"
             >
         </Button>
 
         <Button
             ohos:id="$+id:attack_btn"
             ohos:text="进攻"
-            ohos:text_size="20fp"
-            ohos:background_element="#AB93F607"
+            ohos:text_size="30fp"
+            ohos:background_element="$media:button"
             ohos:text_color="#FFFFFF"
             ohos:left_margin="10fp"
-            ohos:height="match_content"
-            ohos:width="95fp"
+            ohos:height="50fp"
+            ohos:width="120fp"
             >
         </Button>
 

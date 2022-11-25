@@ -4,12 +4,14 @@
     ohos:height="match_parent"
     ohos:width="match_parent"
     ohos:alignment="horizontal_center"
+    ohos:background_element="$media:bk12"
     ohos:orientation="vertical">
 
     <DirectionalLayout
         ohos:top_margin="20fp"
         ohos:height="match_content"
         ohos:width="match_parent"
+        ohos:layout_alignment="bottom"
         ohos:left_margin="30fp"
         ohos:orientation="horizontal">
 
@@ -24,6 +26,7 @@
         <TextField
             ohos:height="match_content"
             ohos:text="小聪子"
+            ohos:text_color="#4D4131"
             ohos:text_size="30fp"
             ohos:id="$+id:player_name_textfield"
             ohos:width="match_content">
@@ -34,6 +37,7 @@
     <DirectionalLayout
         ohos:height="match_content"
         ohos:width="match_parent"
+        ohos:layout_alignment="bottom"
         ohos:top_margin="10fp"
         ohos:left_margin="30fp"
         ohos:orientation="horizontal">
@@ -49,6 +53,7 @@
         <TextField
             ohos:height="match_content"
             ohos:text="我最爱我的女朋友"
+            ohos:text_color="#4D4131"
             ohos:text_size="22fp"
             ohos:id="$+id:player_dialog_textfield"
             ohos:width="match_content">
@@ -91,10 +96,12 @@
 
 
     <Button
-        ohos:height="match_content"
+        ohos:height="50fp"
         ohos:id="$+id:choosecha_btn"
-        ohos:width="match_content"
-        ohos:text="选择人物"
+        ohos:background_element="$media:hair_btn"
+        ohos:text_color="#ffffff"
+        ohos:width="120fp"
+        ohos:text="选择发型"
         ohos:text_size="20fp"
         >
     </Button>
@@ -124,6 +131,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:level_text"
@@ -149,6 +157,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:money_text"
@@ -180,6 +189,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:xue_text"
@@ -203,6 +213,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:gongji_text"
@@ -227,6 +238,7 @@
                 <Text
                     ohos:height="match_content"
                     ohos:left_margin="10fp"
+                    ohos:text_color="#FFFFFF"
                     ohos:width="match_content"
                     ohos:text_size="20fp"
                     ohos:id="$+id:fangyu_text"
@@ -239,41 +251,72 @@
 
     </DirectionalLayout>
 
-    <Button
+    <DirectionalLayout
         ohos:height="match_content"
         ohos:width="match_content"
-        ohos:text_size="20fp"
-        ohos:id="$+id:store_btn"
-        ohos:text="购物商城"
-        >
-    </Button>
+        ohos:orientation="horizontal">
+
+        <Button
+            ohos:height="50fp"
+            ohos:margin="5fp"
+            ohos:width="120fp"
+            ohos:text_color="#FFFFFF"
+            ohos:background_element="$media:button"
+            ohos:text_size="20fp"
+            ohos:id="$+id:store_btn"
+            ohos:text="购物商城"
+            >
+        </Button>
 
 
-    <Button
-        ohos:height="match_content"
-        ohos:width="match_content"
-        ohos:text_size="20fp"
-        ohos:id="$+id:new_begin_btn"
-        ohos:text="新的开始"
-        >
-    </Button>
-    <Button
-        ohos:height="match_content"
-        ohos:width="match_content"
-        ohos:text="选择关卡"
-        ohos:text_size="20fp"
-        ohos:id="$+id:choose_level_btn"
-        >
-    </Button>
+        <Button
+            ohos:height="50fp"
+            ohos:margin="5fp"
+            ohos:width="120fp"
+            ohos:text_color="#FFFFFF"
+            ohos:background_element="$media:button"
+            ohos:text_size="20fp"
+            ohos:id="$+id:new_begin_btn"
+            ohos:text="新的开始"
+            >
+        </Button>
 
-    <Button
+
+    </DirectionalLayout>
+
+    <DirectionalLayout
         ohos:height="match_content"
-        ohos:width="match_content"
-        ohos:text_size="20fp"
-        ohos:text="开始游戏"
-        ohos:id="$+id:play_btn"
-        >
-    </Button>
+        ohos:orientation="horizontal"
+        ohos:width="match_content">
+
+        <Button
+            ohos:height="50fp"
+
+            ohos:width="120fp"
+            ohos:text_color="#FFFFFF"
+            ohos:background_element="$media:button"
+            ohos:text="选择关卡"
+            ohos:text_size="20fp"
+            ohos:id="$+id:choose_level_btn"
+            >
+        </Button>
+
+        <Button
+            ohos:height="60fp"
+            ohos:width="150fp"
+            ohos:text_color="#FFFFFF"
+            ohos:left_margin="5fp"
+            ohos:background_element="$media:button"
+            ohos:text_size="20fp"
+            ohos:text="开始游戏"
+            ohos:id="$+id:play_btn"
+            >
+        </Button>
+
+    </DirectionalLayout>
+
+
+
 
 
 

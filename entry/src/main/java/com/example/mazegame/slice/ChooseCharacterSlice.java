@@ -49,6 +49,7 @@ public class ChooseCharacterSlice extends AbilitySlice {
         int blockMargin = (int) (ChipWidth * 0.15);
 
         TableLayout tableLayout = (TableLayout) findComponentById(ResourceTable.Id_player_layout);
+        tableLayout.removeAllComponents();
         tableLayout.setRowCount((int)(playerId.length/2));
         tableLayout.setColumnCount(2);
 

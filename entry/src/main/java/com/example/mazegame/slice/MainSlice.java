@@ -77,8 +77,6 @@ public class MainSlice extends AbilitySlice {
             @Override
             public void onClick(Component component) {
                 newBegin();
-
-
             }
         });
 

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:margin="5fp"
+    ohos:alignment="horizontal_center"
+    ohos:background_element="$media:bk19"
+    ohos:orientation="vertical">
+    <Text
+        ohos:top_margin="20fp"
+        ohos:height="match_content"
+        ohos:text="作者信息"
+        ohos:text_color="#FFFFFF"
+        ohos:text_size="30fp"
+        ohos:width="match_content">
+    </Text>
+
+    <Text
+        ohos:height="match_content"
+        ohos:text="姓名:徐聪"
+        ohos:text_color="#FFFFFF"
+        ohos:text_size="15fp"
+        ohos:top_margin="20fp"
+        ohos:width="match_content">
+    </Text>
+
+    <Text
+        ohos:height="match_content"
+        ohos:text="学校:重庆大学"
+        ohos:text_color="#FFFFFF"
+        ohos:text_size="15fp"
+        ohos:top_margin="8fp"
+        ohos:width="match_content">
+    </Text>
+
+    <Text
+        ohos:height="match_content"
+        ohos:text="email:2505327613@qq.com"
+        ohos:text_color="#FFFFFF"
+        ohos:text_size="15fp"
+        ohos:top_margin="8fp"
+        ohos:width="match_content">
+    </Text>
+
+    <Text
+        ohos:height="match_content"
+        ohos:text="github:xclovehsy"
+        ohos:text_color="#FFFFFF"
+        ohos:text_size="15fp"
+        ohos:top_margin="8fp"
+        ohos:width="match_content">
+    </Text>
+
+    <Text
+        ohos:height="match_content"
+        ohos:text="完成时间:2022.11.25"
+        ohos:text_color="#FFFFFF"
+        ohos:text_size="15fp"
+        ohos:top_margin="8fp"
+        ohos:width="match_content">
+    </Text>
+
+    <Text
+        ohos:height="match_content"
+        ohos:text="version:1.0"
+        ohos:text_color="#FFFFFF"
+        ohos:text_size="15fp"
+        ohos:top_margin="8fp"
+        ohos:width="match_content">
+    </Text>
+
+    <Button
+        ohos:top_margin="20fp"
+        ohos:height="40fp"
+        ohos:text="确定"
+        ohos:id="$+id:ok_btn"
+        ohos:text_size="20fp"
+        ohos:background_element="$media:button"
+        ohos:text_color="#FFFFFF"
+        ohos:width="110fp">
+
+    </Button>
+
+
+</DirectionalLayout>

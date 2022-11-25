@@ -16,4 +16,6 @@
         ohos:text_size="16fp"
         ohos:text="This is a ToastDialog for the customized component"
         ohos:background_element="$graphic:background_toast_element"/>
+
+
 </DirectionalLayout>

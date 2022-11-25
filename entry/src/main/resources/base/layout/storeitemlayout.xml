@@ -26,6 +26,7 @@
         ohos:orientation="vertical">
 
         <Text
+            ohos:text_color="#FFFFFF"
             ohos:height="match_content"
             ohos:width="match_content"
             ohos:text="奶油蛋糕"
@@ -36,6 +37,7 @@
         </Text>
 
         <Text
+            ohos:text_color="#FFFFFF"
             ohos:height="match_content"
             ohos:width="match_content"
             ohos:id="$+id:describetext"
@@ -69,6 +71,7 @@
             </Image>
 
             <Text
+                ohos:text_color="#FF4BFF1A"
                 ohos:id="$+id:value_1"
                 ohos:height="match_content"
                 ohos:width="match_content"
@@ -96,6 +99,7 @@
             </Image>
 
             <Text
+                ohos:text_color="#FF4BFF1A"
                 ohos:id="$+id:value_2"
                 ohos:height="match_content"
                 ohos:width="match_content"
@@ -114,6 +118,7 @@
         ohos:alignment="right"
         ohos:width="match_parent">
         <Text
+            ohos:text_color="#FFF51D1D"
             ohos:top_margin="15fp"
             ohos:id="$+id:money_text"
             ohos:height="match_content"
