@@ -58,6 +58,10 @@ public class MainAbilitySlice extends AbilitySlice {
     private Image girl;
     private Button store_btn;
     private int shift = 30;
+    private Text playerName;
+    private boolean isFromfinish;
+    private int playerbeginx;
+    private int playerbeginy;
 
 
     @Override
@@ -75,6 +79,9 @@ public class MainAbilitySlice extends AbilitySlice {
 //
 //        character.setIsHaveGirl(true);
         gameLevel = intent.getIntParam("gameLevel", 1);
+
+        isFromfinish = intent.getBooleanParam("isFromfinish", false);
+
         mapsize = 10;
 
         mapImage = new Image[mapsize][mapsize];
@@ -121,6 +128,8 @@ public class MainAbilitySlice extends AbilitySlice {
         }
         ormContext.flush();
         ormContext.close();
+
+        HiLog.info(label, "getCharaterData="+temp.toString());
         return temp;
     }
 
@@ -178,8 +187,32 @@ public class MainAbilitySlice extends AbilitySlice {
 
                     MainAbilitySlice slice = new MainAbilitySlice();
                     Intent intent = new Intent();
+                    intent.setParam("isFromfinish", true);
                     intent.setParam("gameLevel", gameLevel-1);
                     present(slice, intent);
+                }else{
+                    if(character.isIsHaveGirl()){
+                        DirectionalLayout toastLayout = (DirectionalLayout) LayoutScatter.getInstance(this)
+                                .parse(ResourceTable.Layout_layout_toast, null, false);
+                        Text text = (Text) toastLayout.findComponentById(ResourceTable.Id_msg_toast);
+                        text.setText("恭喜你,带回了小美!");
+                        new ToastDialog(getContext())
+                                .setContentCustomComponent(toastLayout)
+                                .setSize(DirectionalLayout.LayoutConfig.MATCH_CONTENT, DirectionalLayout.LayoutConfig.MATCH_CONTENT)
+                                .setAlignment(LayoutAlignment.CENTER)
+                                .show();
+                    }else{
+                        DirectionalLayout toastLayout = (DirectionalLayout) LayoutScatter.getInstance(this)
+                                .parse(ResourceTable.Layout_layout_toast, null, false);
+                        Text text = (Text) toastLayout.findComponentById(ResourceTable.Id_msg_toast);
+                        text.setText("请寻找”美丽“的宝藏,并将她带回来!");
+                        new ToastDialog(getContext())
+                                .setContentCustomComponent(toastLayout)
+                                .setSize(DirectionalLayout.LayoutConfig.MATCH_CONTENT, DirectionalLayout.LayoutConfig.MATCH_CONTENT)
+                                .setAlignment(LayoutAlignment.CENTER)
+                                .show();
+
+                    }
                 }
                 return;
             } else if (map[x][y] == 3) {//men
@@ -207,6 +240,8 @@ public class MainAbilitySlice extends AbilitySlice {
 
             player.setContentPositionX(mapImage[x][y].getLeft() + mapLayout.getLeft() + shift);
             player.setContentPositionY(mapImage[x][y].getTop() + mapLayout.getTop() + shift);
+            playerName.setContentPositionX(player.getContentPositionX()+10);
+            playerName.setContentPositionY(player.getContentPositionY()-40);
         }
     }
 
@@ -758,13 +793,37 @@ public class MainAbilitySlice extends AbilitySlice {
      * 开始游戏
      */
     private void playGame() {
-
-        // 玩家
         player.setVisibility(Component.VISIBLE);
-        curX = beginx;
-        curY = beginy;
-        player.setContentPositionX(mapImage[beginx][beginy].getLeft() + mapLayout.getLeft() + shift);
-        player.setContentPositionY(mapImage[beginx][beginy].getTop() + mapLayout.getTop() + shift);
+
+        if(isFromfinish){
+            curX = playerbeginx;
+            curY = playerbeginy;
+            player.setContentPositionX(mapImage[playerbeginx][playerbeginy].getLeft() + mapLayout.getLeft() + shift);
+            player.setContentPositionY(mapImage[playerbeginx][playerbeginy].getTop() + mapLayout.getTop() + shift);
+            playerName.setVisibility(Text.VISIBLE);
+            playerName.setContentPositionX(player.getContentPositionX()+10);
+            playerName.setContentPositionY(player.getContentPositionY()-40);
+            if (character.isIsHaveGirl()) {
+                girl.setVisibility(Image.VISIBLE);
+                girl.setContentPositionX(mapImage[playerbeginx][playerbeginy].getLeft() + mapLayout.getLeft() + shift);
+                girl.setContentPositionY(mapImage[playerbeginx][playerbeginy].getTop() + mapLayout.getTop() + shift);
+            }
+
+        }else{
+            curX = beginx;
+            curY = beginy;
+            player.setContentPositionX(mapImage[beginx][beginy].getLeft() + mapLayout.getLeft() + shift);
+            player.setContentPositionY(mapImage[beginx][beginy].getTop() + mapLayout.getTop() + shift);
+            playerName.setVisibility(Text.VISIBLE);
+            playerName.setContentPositionX(player.getContentPositionX()+10);
+            playerName.setContentPositionY(player.getContentPositionY()-40);
+            if (character.isIsHaveGirl()) {
+                girl.setVisibility(Image.VISIBLE);
+                girl.setContentPositionX(mapImage[beginx][beginy].getLeft() + mapLayout.getLeft() + shift);
+                girl.setContentPositionY(mapImage[beginx][beginy].getTop() + mapLayout.getTop() + shift);
+            }
+        }
+
 
         // 道具
         for (int i = 0; i < mapsize; i++) {
@@ -778,11 +837,7 @@ public class MainAbilitySlice extends AbilitySlice {
             }
         }
 
-        if (character.isIsHaveGirl()) {
-            girl.setVisibility(Image.VISIBLE);
-            girl.setContentPositionX(mapImage[beginx][beginy].getLeft() + mapLayout.getLeft() + shift);
-            girl.setContentPositionY(mapImage[beginx][beginy].getTop() + mapLayout.getTop() + shift);
-        }
+
 
     }
 
@@ -795,13 +850,15 @@ public class MainAbilitySlice extends AbilitySlice {
         aggre_text = (Text) findComponentById(ResourceTable.Id_gongji_text);
         defense_text = (Text) findComponentById(ResourceTable.Id_fangyu_text);
         money_text = (Text) findComponentById(ResourceTable.Id_money_text);
+        playerName = (Text) findComponentById(ResourceTable.Id_player_name_text);
+        playerName.setVisibility(Text.INVISIBLE);
+        playerName.setText(character.getName());
 
         mainLayout = (DirectionalLayout) findComponentById(ResourceTable.Id_game_layout);
         left_btn = (Image) findComponentById(ResourceTable.Id_left);
         right_btn = (Image) findComponentById(ResourceTable.Id_right);
         up_btn = (Image) findComponentById(ResourceTable.Id_up);
         down_btn = (Image) findComponentById(ResourceTable.Id_down);
-
 
         player = (Image) findComponentById(ResourceTable.Id_player);
         player.setVisibility(Component.INVISIBLE);
@@ -869,6 +926,10 @@ public class MainAbilitySlice extends AbilitySlice {
                     switch (map[i][j]) {
                         case MapData.finish:
                             image.setPixelMap(ResourceTable.Media_finish);
+                            if(isFromfinish){
+                                playerbeginx = i;
+                                playerbeginy = j;
+                            }
                             break;
                         case MapData.girl:
                             image.setPixelMap(ResourceTable.Media_girl1);

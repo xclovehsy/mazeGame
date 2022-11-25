@@ -317,6 +317,14 @@
         >
     </Image>
 
+    <Text
+        ohos:height="match_content"
+        ohos:width="match_content"
+        ohos:id="$+id:player_name_text"
+        ohos:text="player"
+        ohos:text_size="10fp">
+    </Text>
+
 
 
 

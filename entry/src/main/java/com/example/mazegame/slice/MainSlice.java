@@ -83,7 +83,7 @@ public class MainSlice extends AbilitySlice {
         begin_btn.setClickedListener(new Component.ClickedListener() {
             @Override
             public void onClick(Component component) {
-
+                saveCharacterData();
                 MainAbilitySlice slice = new MainAbilitySlice();
                 Intent intent = new Intent();
                 intent.setParam("gameLevel", character.getLevel());
@@ -94,6 +94,7 @@ public class MainSlice extends AbilitySlice {
         store_btn.setClickedListener(new Component.ClickedListener() {
             @Override
             public void onClick(Component component) {
+                saveCharacterData();
                 StoreSlice slice = new StoreSlice();
                 Intent intent = new Intent();
                 present(slice, intent);
@@ -103,6 +104,7 @@ public class MainSlice extends AbilitySlice {
         choose_btn.setClickedListener(new Component.ClickedListener() {
             @Override
             public void onClick(Component component) {
+                saveCharacterData();
                 ChooseGameSlice slice = new ChooseGameSlice();
                 Intent intent = new Intent();
                 present(slice, intent);
@@ -236,14 +238,6 @@ public class MainSlice extends AbilitySlice {
      * 更新数据
      */
     private void newBegin(){
-//        character = new  Character(5201314, "player", "又是美好的一天", false, ResourceTable.Media_girl1,
-//                ResourceTable.Media_player1, 99, 50, 50, 1, 520);
-//        setPlayerInfo();
-//
-//        saveCharacterData();
-
-
-
         Character temp = null;
         //         ormContext为对象数据库的操作接口，之后的增删等操作都是通过该对象进行操作
         DatabaseHelper helper = new DatabaseHelper(this);
